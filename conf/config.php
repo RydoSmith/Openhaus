@@ -10,8 +10,8 @@ return array
     //Database
     'db_location'   => 'localhost',
     'db_name'       => 'openhaus',
-    'db_username'   => 'root',
-    'db_password'   => 'r160689s',
+    'db_user'   => 'root',
+    'db_pass'   => 'r160689s',
 
     //Email Settings
     'email_system'  => 'support@openhaus.com',
