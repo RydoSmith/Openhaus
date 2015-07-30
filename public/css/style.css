@@ -38,3 +38,8 @@
     text-align: center;
     padding-top: 80px;
 }
+
+.error-message
+{
+    color: #B71C1C;
+}

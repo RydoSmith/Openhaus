@@ -1,0 +1,2 @@
+<h1 style="text-align: center; margin-top: 60px; color: #FF548E">Welcome to Openhaus!</h1>
+<p style="text-align: center">Your account has been created. Please check your email inbox and follow the instructions to complete the registration process.</p>

@@ -12,6 +12,7 @@
                 <label class="mdl-textfield__label" for="email">Email</label>
                 <span class="mdl-textfield__error">Not a valid email address!</span>
             </div>
+            <?php $this->htmlHelper->DisplayErrorFor($model, 'email'); ?>
             <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit" style="float: right">Sign Up</button>
         </form>
     </div>
