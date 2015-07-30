@@ -7,10 +7,17 @@ class Account extends BaseController
         parent::__construct($action, $urlParams);
     }
 
-    protected function SignIn()
+    protected function SignUp()
     {
-        $model = new AccountModel("SignIn");
-        $model->setPageTitle('Sign In');
-        $this->ReturnView($model->view);
+        $model = new AccountModel("SignUp");
+        $model->setPageTitle('Sign Up');
+        $this->ReturnView($model->view, "layout_no_header");
+    }
+
+    protected function Login()
+    {
+        $model = new AccountModel("Login");
+        $model->setPageTitle('Login');
+        $this->ReturnView($model->view, "layout_no_header");
     }
 }

@@ -10,7 +10,7 @@
                 echo $model->message;
             }
         ?>
-        <div class="layout-transparent mdl-layout mdl-js-layout">
+        <div class="layout-transparent mdl-layout mdl-js-layout" style="background: none">
             <?php require('views/shared/nav.php'); ?>
             <main class="mdl-layout__content">
                 <?php require($location);  ?>

@@ -15,7 +15,12 @@ class AccountModel extends BaseModel
         }
     }
 
-    public function SignIn()
+    public function SignUp()
+    {
+
+    }
+
+    public function Login()
     {
 
     }
