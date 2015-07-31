@@ -140,7 +140,6 @@ abstract class BaseModel
             $this->view->account->first_name = $row['first_name'];
             $this->view->account->last_name = $row['last_name'];
             $this->view->account->full_name = $row['first_name'].' '.$row['last_name'];
-            $this->view->account->account_type = $row['account_type'];
         }
     }
 

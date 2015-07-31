@@ -11,7 +11,7 @@ class HTMLHelper
     {
         if(isset($m) && isset($m->modelErrors[$field]))
         {
-            echo '<p class="error-message" style="margin: 5px 0;">'.$m->modelErrors[$field]->message.'</p>';
+            echo '<p class="red-text" style="margin: 5px 0;">'.$m->modelErrors[$field]->message.'</p>';
         }
     }
 

@@ -11,6 +11,12 @@ class Home extends BaseController
     {
         $model = new HomeModel("Index");
         $model->setPageTitle('Home');
+
+        if(isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == 1)
+        {
+            $model->GetAccountInfo();
+        }
+
         $this->ReturnView($model->view);
     }
 
