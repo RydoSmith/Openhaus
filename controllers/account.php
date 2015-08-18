@@ -93,7 +93,7 @@ class Account extends BaseController
     }
 
     /* LOGIN */
-    protected function Login()
+    protected function Login($params = null)
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
@@ -108,12 +108,37 @@ class Account extends BaseController
                 exit();
             }
 
-            $this->Redirect('home');
+            //See if a return url has been set
+            if(isset($_POST['returnUrl']))
+            {
+                switch($_POST['returnUrl'])
+                {
+                    case '/event/create':
+                        $this->Redirect('event', 'create');
+                        break;
+                }
+            }
+            else
+            {
+                //No return parameter send to default logged in screen
+                $this->Redirect('home');
+            }
         }
         else
         {
             //GET
             $model = new AccountModel("Login");
+
+            //Set the return url based on the passed parameters
+            if(isset($params))
+            {
+                switch($params)
+                {
+                    case 'createevent':
+                        $model->view->returnUrl = '/event/create';
+                        break;
+                }
+            }
 
             $model->setPageTitle('Login');
             $this->ReturnViewByName("login", $model->view);

@@ -1,4 +1,4 @@
-<form action="/account/complete" method="post">
+<form action="/account/complete" method="post" autocomplete="off">
     <div class="row" id="card-1">
         <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="card white" style="margin: 200px auto 0 auto;">

@@ -13,10 +13,18 @@
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="/public/css/materialize.css" />
+<link rel="stylesheet" href="/public/css/classic.css" id="theme_base" />
+
+
 <link rel="stylesheet" href="/public/css/style.css" />
 
 <script src="/public/js/jquery-1.11.3.min.js"></script>
 <script src="/public/js/materialize.js"></script>
+<script src="/public/js/picker.js"></script>
+<script src="/public/js/picker.date.js"></script>
+<script src="/public/js/picker.time.js"></script>
+<script src="/public/js/class-libs.js"></script>
+<script src="/public/js/dropzone.js"></script>
 
 
 

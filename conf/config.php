@@ -19,5 +19,4 @@ return array
     'smtp_host'  => 'smtp.gmail.com',
     'smtp_user'  => 'rydosmith2@gmail.com',
     'smtp_password'  => 'R160689s'
-
 );

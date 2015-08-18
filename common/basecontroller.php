@@ -69,19 +69,19 @@ abstract class BaseController
         $this->{$this->action}($model);
     }
 
-    protected function Redirect($area, $controller = '', $action = '')
+    protected function Redirect($controller = '', $action = '', $param = null)
     {
-        if($controller == '' && $action == '')
+        if($action == '')
         {
-            header('Location: /'.$area);
+            header('Location: /'.$controller);
         }
-        else if($action == '')
+        else if(isset($controller) && isset($action) && !isset($param))
         {
-            header('Location: /'.$area.'/'.$controller);
+            header('Location: /'.$controller.'/'.$action);
         }
         else
         {
-            header('Location: /'.$area.'/'.$controller.'/'.$action);
+            header('Location: /'.$controller.'/'.$action.'/'.$param);
         }
     }
 }

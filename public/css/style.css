@@ -1,3 +1,14 @@
+body{
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.container-fix
+{
+    padding-top: 60px;
+}
+
+
 nav.teal
 {
     opacity: 0.9;
@@ -46,7 +57,133 @@ div.proposition .content .title
 footer.page-footer
 {
     padding-top: 0;
-    position: absolute;
+    display: inline-block;
     bottom: 0;
     width: 100%;
 }
+
+/* PAGE - Refers to a multi step/wizard page within a view */
+.page
+{
+
+}
+
+.page .page-header
+{
+    background-color: #F2F2F2;
+    display: inline-block;
+    width: 100%;
+    padding-top: 30px;
+}
+
+.page .page-action
+{
+
+}
+
+.page .page-content
+{
+    padding-top: 30px;
+    min-height: 500px;
+}
+
+/* DATE PICKER */
+.date-card
+{
+    border: 1px solid #efefef;
+    border-left: 3px solid #004d40;
+    padding: 20px;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.picker__holder
+{
+    margin-top: -16px;
+    border: none !important;
+    outline: none !important;
+}
+
+.picker__holder
+{
+
+}
+
+li.picker__list-item
+{
+    padding: 20px !important;
+}
+
+.picker__holder
+{
+    height: 300px !important;
+}
+
+/* Google map auto complete*/
+#map
+{
+    margin-left: -70px;
+    margin-top: -0px;
+    width: 860px;
+    height: 600px;
+}
+
+#map-container
+{
+    height: 500px;
+    width: 800px;
+    overflow: hidden;
+
+}
+
+.pac-container:after
+{
+    background-image: none !important;
+}
+
+/* Tags */
+
+.tag-display
+{
+
+}
+
+ul.tag-display li
+{
+    float: left;
+    display: inline-block;
+    width: auto;
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #009788;
+    color: #fff;
+}
+
+/* Image Upload */
+.dz-filename
+{
+    display: none;
+}
+
+.image-upload
+{
+    margin-top: 20px;
+    padding: 70px 0;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.image-upload:hover
+{
+    cursor: pointer;
+}
+
+.dz-image img
+{
+    width: 100% !important;
+    height: 100% !important;
+}
+

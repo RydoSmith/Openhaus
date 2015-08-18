@@ -9,6 +9,7 @@ abstract class BaseModel
     {
         $this->config = $config;
         $this->database = $this->getDatabaseConnection($config);
+        $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->view = new stdClass();
         $this->view->modelErrors = array();

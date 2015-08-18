@@ -14,16 +14,19 @@
 
     //Require helpers
     require_once 'helpers/htmlhelper.php';
+    require_once 'helpers/chelper.php';
 
     //Require models
     require_once 'models/homemodel.php';
     require_once 'models/errormodel.php';
     require_once 'models/accountmodel.php';
+    require_once 'models/eventmodel.php';
 
     //Require controllers
     require_once 'controllers/error.php';
     require_once 'controllers/home.php';
     require_once 'controllers/account.php';
+    require_once 'controllers/event.php';
 
     //create controllers and execute the action
     $loader = new Loader($_GET);
