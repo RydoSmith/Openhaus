@@ -7,6 +7,7 @@ class Event extends BaseController
         parent::__construct($action, $urlParams);
     }
 
+    //Event creation
     protected function Create()
     {
         //Check user is logged in
@@ -40,22 +41,58 @@ class Event extends BaseController
         }
     }
 
+    //Search
+    protected function Search()
+    {
+        //Check if post
+        if(CHelper::IsPost())
+        {
+            $model = new EventModel("Search", true);
+            $model->setPageTitle('Search');
+            $this->ReturnView($model->view);
+        }
+        else
+        {
+            //get
+            //is not post, cannot contain post variables,
+            //redirect to home
+            $this->Redirect('home');
+        }
+    }
+
+    //Image upload, event specific
     public function ImageUpload()
     {
+        //Create unique GUID
         $guid = CHelper::GetGUID();
 
+        //Set server directory
         $ds = DIRECTORY_SEPARATOR;
         $storeFolder = '/var/www/public/app_data/event_images/';
 
+        //If files are set
         if (!empty($_FILES)) {
 
             $temp = explode(".", $_FILES["file"]["name"]);
             $newfilename = $guid . '.' . end($temp);
+
+            //Move image to event_images
             move_uploaded_file($_FILES["file"]["tmp_name"], $storeFolder . $newfilename);
 
+            //Set header to json and return filename
             header('Content-Type: application/json');
-            echo json_encode($guid);
+            echo json_encode($newfilename);
             exit();
         }
+    }
+
+    //IMPORTANT - REMOVE WHEN LIVE
+    //Sample
+    //IMPORTANT - REMOVE WHEN LIVE
+    public function GenerateSampleData()
+    {
+        $model = new EventModel("GenerateSampleData", false);
+        echo "Sample Data Generated";
+        exit();
     }
 }

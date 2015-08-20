@@ -19,11 +19,4 @@ class Home extends BaseController
 
         $this->ReturnView($model->view);
     }
-
-    protected function About()
-    {
-        $model = new HomeModel("About");
-        $model->setPageTitle('About');
-        $this->ReturnView($model->view);
-    }
 }
