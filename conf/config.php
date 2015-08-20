@@ -16,7 +16,7 @@ return array
     //Email Settings
     'email_system'  => 'support@openhaus.it',
     'email_support'  => 'support@openhaus.it',
-    'smtp_host'  => 'smtp.gmail.com',
-    'smtp_user'  => 'rydosmith2@gmail.com',
-    'smtp_password'  => 'R160689s'
+    'smtp_host'  => 'smtp.postmarkapp.com',
+    'smtp_user'  => 'bfd19866-de79-4fce-a569-1b828feff203',
+    'smtp_password'  => 'bfd19866-de79-4fce-a569-1b828feff203'
 );
