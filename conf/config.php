@@ -14,7 +14,7 @@ return array
     'db_pass'   => 'r160689s',
 
     //Email Settings
-    'email_system'  => 'support@openhaus.it',
+    'email_system'  => 'ryan@krftwrk.ca',
     'email_support'  => 'support@openhaus.it',
     'smtp_host'  => 'smtp.postmarkapp.com',
     'smtp_user'  => 'bfd19866-de79-4fce-a569-1b828feff203',

@@ -16,7 +16,7 @@ class Email extends PHPMailer
         $this->Password = $config['smtp_password'];
 
         $this->From = $config['email_system'];
-        $this->FromName= 'no-reply';
+        $this->FromName= 'Ryan Smith';
 
         $this->isHTML($isHTML);
     }
