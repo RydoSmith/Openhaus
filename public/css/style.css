@@ -8,14 +8,12 @@ body{
     padding-top: 60px;
 }
 
-
 nav.teal
 {
     opacity: 0.9;
     z-index: 9999;
     position: absolute;
 }
-
 
 div.proposition
 {
@@ -184,4 +182,43 @@ ul.tag-display li
     width: 100% !important;
     height: 100% !important;
 }
+
+/*Search Page - Refers to a search results page */
+div.event-result
+{
+    padding: 0 20px;
+}
+div.event-result:hover
+{
+    background-color: #efefef;
+    cursor: pointer;
+}
+
+.event-result .heading
+{
+    width: 100%;
+    padding: 10px 0;
+}
+
+.event-result .heading h4,
+.event-result .heading h6
+{
+    margin: 0;
+}
+
+.event-result-image
+{
+    width: 120%;
+}
+
+.event-result-content
+{
+    min-height: 180px;
+    background-color: #efefef;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    float: left;
+}
+
 

@@ -9,9 +9,9 @@
         <div class="container">
             <div class="col s12 m12 l12">
                 <form action="/event/search" method="post">
-                    <h5 class="white-text" style="line-height: 30px;">
+                    <h6 class="white-text" style="line-height: 60px; margin: 0;">
                         I'm looking for a
-                        <a class="dropdown-button btn" href="#" data-activates="bedroomselect" style="margin-bottom: 5px" id="bedroom-select-display">1 bedroom</a>
+                        <a class="dropdown-button btn" href="#" data-activates="bedroomselect" style="margin-bottom: 5px; background: none !important;" id="bedroom-select-display">1 bedroom</a>
                         <ul id="bedroomselect" class="dropdown-content" style="width: 200px; position: absolute; top: 53px; left: 951.09375px; opacity: 1; display: none;">
                             <li><a href="#!" class="bedroom-select" data-value="any">any bedrooms</a></li>
                             <li><a href="#!" class="bedroom-select" data-value="1">1 bedroom</a></li>
@@ -21,7 +21,7 @@
                             <li><a href="#!" class="bedroom-select" data-value="5">5 bedroom</a></li>
                             <li><a href="#!" class="bedroom-select" data-value="6">6+ bedroom</a></li>
                         </ul>
-                        <a class="dropdown-button btn" href="#" data-activates="typeselect" style="margin-bottom: 5px" id="type-select-display">house</a>
+                        <a class="dropdown-button btn" href="#" data-activates="typeselect" style="margin-bottom: 5px;background: none !important;" id="type-select-display">house</a>
                         <ul id="typeselect" class="dropdown-content" style="width: 200px; position: absolute; top: 53px; left: 951.09375px; opacity: 1; display: none;">
                             <li><a href="#!" class="type-select" data-value="any">any property type</a></li>
                             <li><a href="#!" class="type-select" data-value="house">house</a></li>
@@ -30,17 +30,17 @@
                             <li><a href="#!" class="type-select" data-value="other">other</a></li>
                         </ul>
                         in
-                        <a class="dropdown-button btn" href="#" data-activates="locationselect" style="margin-bottom: 5px" id="location-select-display">toronto</a>
+                        <a class="dropdown-button btn" href="#" data-activates="locationselect" style="margin-bottom: 5px;background: none !important;" id="location-select-display">any location</a>
                         <ul id="locationselect" class="dropdown-content" style="width: 200px; position: absolute; top: 53px; left: 951.09375px; opacity: 1; display: none;">
                             <li><a href="#!" class="location-select" data-value="any">any location</a></li>
-                            <li><a href="#!" class="location-select" data-value="toronto">toronto</a></li>
-                            <li><a href="#!" class="location-select" data-value="aberdeen">aberdeen</a></li>
+<!--                            <li><a href="#!" class="location-select" data-value="toronto">toronto</a></li>-->
+<!--                            <li><a href="#!" class="location-select" data-value="aberdeen">aberdeen</a></li>-->
                         </ul>
                         <input type="hidden" name="bedrooms" id="bedroom-search-value" value="1">
                         <input type="hidden" name="type" id="type-search-value" value="house">
-                        <input type="hidden" name="location"  id="location-search-value" value="toronto">
-                        <input type="submit" class="btn pink" value="search" style="font-size: 1rem; float: right;">
-                    </h5>
+                        <input type="hidden" name="location"  id="location-search-value" value="any">
+                        <input type="submit" class="btn pink" value="search" style="font-size: 1rem; margin-top: -5px">
+                    </h6>
                 </form>
                 <div class="clearfix"></div>
             </div>
@@ -49,7 +49,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <p>Find the closest open house near me.</p>
+        <p class="teal-text">Find the closest open house near me.</p>
         <?php foreach($model->events as $event): ?>
             <?php //print_r($event);exit(); ?>
             <div class="col s12 m6 l4">
@@ -59,9 +59,9 @@
                     </div>
                 </div>
                 <div style="background-color: #efefef; width: 100%; padding: 10px; margin-bottom: 20px;">
-                    <p><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</p>
-                    <p><?=$event['location']?></p>
-                    <p><?= date("F jS, Y", strtotime($event['dates'][0]['date']));?> at <?= $event['dates'][0]['time']; ?></p>
+                    <p class="blue-grey-text"><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</p>
+                    <p class="blue-grey-text" style="height: 22px; overflow: hidden;"><?=$event['location']?></p>
+                    <p class="blue-grey-text"><?= date("F jS", strtotime($event['dates'][0]['date']));?></p>
                 </div>
 
             </div>

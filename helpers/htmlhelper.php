@@ -37,7 +37,7 @@ class HTMLHelper
 
     public static function IsLoggedIn()
     {
-        if($_SESSION['LoggedIn'] == 1 && isset($_SESSION['Username']))
+        if(isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == 1 && isset($_SESSION['Username']))
         {
             return true;
         }

@@ -18,7 +18,6 @@ class HomeModel extends BaseModel
     public function Index()
     {
         //Get Events
-        $sql = "SELECT * FROM events LIMIT 6";
-        $this->view->events = parent::GetAllEventData($sql);
+        $this->view->events = parent::GetEventsNearLocation(null);
     }
 }

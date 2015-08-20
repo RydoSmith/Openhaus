@@ -86,6 +86,19 @@ class Event extends BaseController
         }
     }
 
+    //Event Detail
+    public function Detail($id)
+    {
+        $model = new EventModel("Detail", false, array($id));
+
+        $model->setPageTitle($model->view->event['name']);
+        $this->ReturnView($model->view);
+    }
+
+
+
+
+
     //IMPORTANT - REMOVE WHEN LIVE
     //Sample
     //IMPORTANT - REMOVE WHEN LIVE

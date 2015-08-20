@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col s12 m12 l12">
             <form action="/event/search" method="post" style="margin-bottom: 20px;">
-                <h6 class="teal-text">Search</h6>
-                <h5 class="teal-text" style="line-height: 30px;">
+                <h6 class="grey-text">Search</h6>
+                <h6 class="teal-text" style="line-height: 30px;">
                     I'm looking for a
                     <a class="dropdown-button btn" href="#" data-activates="bedroomselect" style="margin-bottom: 5px;" id="bedroom-select-display">1 bedroom</a>
                     <ul id="bedroomselect" class="dropdown-content" style="width: 200px; position: absolute; top: 53px; left: 951.09375px; opacity: 1; display: none;">
@@ -24,37 +24,37 @@
                         <li><a href="#!" class="type-select" data-value="other">other</a></li>
                     </ul>
                     in
-                    <a class="dropdown-button btn" href="#" data-activates="locationselect" style="margin-bottom: 5px;" id="location-select-display">toronto</a>
+                    <a class="dropdown-button btn" href="#" data-activates="locationselect" style="margin-bottom: 5px;" id="location-select-display">any location</a>
                     <ul id="locationselect" class="dropdown-content" style="width: 200px; position: absolute; top: 53px; left: 951.09375px; opacity: 1; display: none;">
                         <li><a href="#!" class="location-select" data-value="any">any location</a></li>
-                        <li><a href="#!" class="location-select" data-value="toronto">toronto</a></li>
-                        <li><a href="#!" class="location-select" data-value="aberdeen">aberdeen</a></li>
+<!--                        <li><a href="#!" class="location-select" data-value="toronto">toronto</a></li>-->
+<!--                        <li><a href="#!" class="location-select" data-value="aberdeen">aberdeen</a></li>-->
                     </ul>
                     <input type="hidden" name="bedrooms" id="bedroom-search-value" value="<?=$model->selectedBedrooms?>">
                     <input type="hidden" name="type" id="type-search-value" value="<?=$model->selectedType?>">
                     <input type="hidden" name="location"  id="location-search-value" value="<?=$model->selectedLocation?>">
                     <input type="submit" class="btn pink" value="search" style="font-size: 1rem;float: right;">
                     <div class="clearfix"></div>
-                </h5>
+                </h6>
             </form>
             <hr>
         </div>
     </div>
     <div class="row">
         <div class="col s12 m12 l3">
-            <h5 class="teal-text">Filter Results <a href="#!" class="btn small grey clear-filters" style="float: right; margin: 0; height: 27px; font-size: 12px; line-height: 27px;">clear</a></h5>
+            <h5 class="teal-text">Filter Results <a href="#!" class="btn small grey clear-filters" style="float: right; margin: 0; margin-bottom: 10px; height: 27px; font-size: 12px; line-height: 27px;  padding: 0 1rem;">clear</a></h5>
             <?php if(count($model->resultsTags) > 0): ?>
 
                 <!-- Tags -->
-                <h6 class="teal-text">by tags</h6>
+                <h6 class="grey-text">by tags</h6>
                 <?php foreach($model->resultsTags as $tag): ?>
-                    <a href="#!" class="btn teal tag-select" style="margin-bottom: 10px; "><?=$tag;?></a>
+                    <a href="#!" class="btn teal tag-select" style="margin-bottom: 10px; height: 27px; font-size: 12px; line-height: 27px;  padding: 0 1rem;"><?=$tag;?></a>
                 <?php endforeach; ?>
 
                 <!-- Dates -->
-                <h6 class="teal-text">by event dates</h6>
+                <h6 class="grey-text">by event dates</h6>
                 <?php foreach($model->resultsDates as $date): ?>
-                    <a href="#!" class="btn teal date-select" style="margin-bottom: 10px; height: 27px; font-size: 12px; line-height: 27px;" data-date="<?=$date?>"><?=date("F jS", strtotime($date));?></a>
+                    <a href="#!" class="btn teal date-select" style="margin-bottom: 10px; height: 27px; font-size: 12px; line-height: 27px;  padding: 0 1rem;" data-date="<?=$date?>"><?=date("M jS", strtotime($date));?></a>
                 <?php endforeach; ?>
 
             <?php endif; ?>
@@ -66,38 +66,44 @@
                     <?php //print_r($event);exit(); ?>
                     <div class="row event-result"
                          data-tags="<?php foreach($event['keywords'] as $tags){ echo $tags['tag'].','; }; ?>"
-                         data-dates="<?php foreach($event['dates'] as $date){ echo $date['date'].','; }; ?>">
+                         data-dates="<?php foreach($event['dates'] as $date){ echo $date['date'].','; }; ?>"
+                         data-url="/event/detail/<?=$event['id']?>">
 
-                        <div style="width: 100%; padding: 10px 0;">
-                            <h4 style="margin: 0;" class="teal-text"><?=$event['name']?></h4>
-                            <h6 style="margin: 0;"><?=$event['location']?></h6>
+                        <div class="heading">
+                            <h4 class="teal-text"><?=$event['name']?></h4>
+                            <h6 class="grey-text"><?=$event['location']?></h6>
                         </div>
-                        <div style="width: 100%;">
-                            <div style="width: 30%; height: 180px; overflow: hidden; float: left; background-image: url(<?=$event['images'][0]['href']?>); background-size: 100%; background-repeat: no-repeat;"></div>
-                        </div>
-                        <div style="min-height: 180px; background-color: #efefef; width: 70%; padding: 10px; margin-bottom: 20px; float: left;">
-                            <div class="row">
-                                <div class="col s12 m8 l8">
-                                    <h5 style="margin: 0" class="teal-text">$<?=$event['price']?></h5>
-                                    <p style="margin: 0"><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</p>
-                                    <h6 class="teal-text">description</h6>
-                                    <p style="margin: 0"><?=$event['description']?></p>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="col s12 m4 l4">
-                                    <h6 class="teal-text">event dates</h6>
-                                    <p>
-                                        <?php foreach($event['dates'] as $date): ?>
-                                            <span class="teal white-text" style="padding: 5px; margin-right: 4px; font-size: 12px"><?= date("F jS", strtotime($date['date']));?></span>
-                                        <?php endforeach; ?>
-                                    </p>
-                                    <h6 class="teal-text">tags</h6>
-                                    <p>
-                                        <?php foreach($event['keywords'] as $keyword): ?>
-                                            <span class="teal white-text" style="padding: 5px; margin-right: 4px"><?= $keyword['tag'] ?></span>
-                                        <?php endforeach; ?>
-                                    </p>
-                                    <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="col s3 m3 l3">
+                                <img src="<?=$event['images'][0]['href']?>" class="event-result-image" alt="">
+                            </div>
+                            <div class="col s9 m9 l9">
+                                <div class="event-result-content">
+                                    <div class="row">
+                                        <div class="col s12 m8 l8">
+                                            <h5 style="margin: 0" class="teal-text">$<?=$event['price']?></h5>
+                                            <p style="margin: 0 0 30px 0" class="blue-grey-text"><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</p>
+                                            <h6 class="teal-text">description</h6>
+                                            <p style="margin: 0" class="blue-grey-text"><?=$event['description']?></p>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="col s12 m4 l4">
+                                            <h6 class="teal-text">event dates</h6>
+                                            <p>
+                                                <?php foreach($event['dates'] as $date): ?>
+                                                    <span class="teal white-text" style="padding: 5px; margin-right: 4px; font-size: 12px; margin-bottom: 5px;"><?= date("M jS", strtotime($date['date']));?></span>
+                                                <?php endforeach; ?>
+                                            </p>
+                                            <h6 class="teal-text">tags</h6>
+                                            <p>
+                                                <?php foreach($event['keywords'] as $keyword): ?>
+                                                    <span class="teal white-text" style="padding: 5px; margin-right: 4px; margin-bottom: 10px; display: inline-block"><?= $keyword['tag'] ?></span>
+                                                <?php endforeach; ?>
+                                            </p>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -210,6 +216,12 @@
                     $(eventResults[i]).hide();
                 }
             }
+        });
+
+
+        //event detail link
+        $('.event-result').click(function(){
+           window.location.href = $(this).attr('data-url');
         });
 
     });

@@ -249,7 +249,7 @@ class EventModel extends BaseModel
 //        exit();
 
         //Return results
-        $this->view->events = parent::GetAllEventData($sql, $params);
+        $this->view->events = parent::GetSearchResults($sql, $params);
         $this->view->selectedBedrooms = $bedrooms;
         $this->view->selectedType = $type;
         $this->view->selectedLocation = $location;
@@ -308,6 +308,25 @@ class EventModel extends BaseModel
         //print_r($this->view->resultsTags); exit();
     }
 
+    public function Detail($id)
+    {
+        //Get account info if logged in
+        if(parent::IsUserLoggedIn())
+        {
+            parent::GetAccountInfo();
+        }
+
+        $event = $this->GetById('events', $id);
+        $this->view->event = $this->GetEventRelatedData($event);
+        //echo '<pre>'; print_r($this->view->event);exit();
+    }
+
+
+
+
+    //IMPORTANT
+    //Remove from live
+    //IMPORTANT
     public function GenerateSampleData()
     {
         parent::GetAccountInfo();
@@ -363,16 +382,16 @@ class EventModel extends BaseModel
         //descriptions
         $descriptions = array
         (
-            "This is an awesome description for event #1, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #2, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #3, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #4, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #5, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #6, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #7, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #8, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #9, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
-            "This is an awesome description for event #10, don't worry it's just sample data. Once we start populating the database this will look much nicer!",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.",
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti."
         );
 
         $dates = array
@@ -528,31 +547,34 @@ class EventModel extends BaseModel
             //
             //INSERT IMAGES AND EVENT_IMAGES
             //
-            $image = rand(1, 3).'.jpg';
-            $sql = "INSERT INTO images (href) VALUES (:href)";
-            if($stmt = $this->database->prepare($sql))
+            for($i = 0; $i < 3; $i++)
             {
-                $href = '/public/app_data/event_images/'.$image;
-                $stmt->bindParam(':href', $href, PDO::PARAM_STR);
+                $image = rand(1, 3).'.jpg';
+                $sql = "INSERT INTO images (href) VALUES (:href)";
+                if($stmt = $this->database->prepare($sql))
+                {
+                    $href = '/public/app_data/event_images/'.$image;
+                    $stmt->bindParam(':href', $href, PDO::PARAM_STR);
 
-                $stmt->execute();
-                $insertedImageId = $this->database->lastInsertId();
+                    $stmt->execute();
+                    $insertedImageId = $this->database->lastInsertId();
+                }
+
+                $sql = "INSERT INTO event_images (event_id, image_id) VALUES (:eid, :iid)";
+                if($stmt = $this->database->prepare($sql))
+                {
+                    $stmt->bindParam(':eid', $event_id, PDO::PARAM_STR);
+                    $stmt->bindParam(':iid', $insertedImageId, PDO::PARAM_STR);
+
+                    $stmt->execute();
+                }
             }
 
-            $sql = "INSERT INTO event_images (event_id, image_id) VALUES (:eid, :iid)";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':eid', $event_id, PDO::PARAM_STR);
-                $stmt->bindParam(':iid', $insertedImageId, PDO::PARAM_STR);
-
-                $stmt->execute();
-            }
 
             $count++;
         }
 
     }
-
     public function CreateSampleEvent($location, $name, $description)
     {
         $types = array

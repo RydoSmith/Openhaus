@@ -10,6 +10,12 @@ class Account extends BaseController
     /* SIGN UP */
     protected function SignUp()
     {
+        //Check user is already logged in redirect to home
+        if(CHelper::IsLoggedIn())
+        {
+            $this->Redirect('home');
+        }
+
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             //POST
@@ -95,6 +101,12 @@ class Account extends BaseController
     /* LOGIN */
     protected function Login($params = null)
     {
+        //Check user is already logged in redirect to home
+        if(CHelper::IsLoggedIn())
+        {
+            $this->Redirect('home');
+        }
+
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             //POST

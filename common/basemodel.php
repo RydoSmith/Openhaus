@@ -148,8 +148,75 @@ abstract class BaseModel
         }
     }
 
-    //Get All Related Event Data
-    public function GetAllEventData($sql, $params = array())
+    //GetById
+    public function GetById($table, $id)
+    {
+        $sql = "SELECT * FROM ".$table." WHERE id=:id";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+    }
+
+
+    //
+    //EVENT HELPERS
+    //
+
+    //Gets all event related data
+    public function GetEventRelatedData($event)
+    {
+        //Get Event Dates
+        $sql = "SELECT * FROM event_dates WHERE event_id=:eid";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':eid', $event['id'], PDO::PARAM_STR);
+            $stmt->execute();
+            $event['dates'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        //Get Event Keywords
+        $sql = "SELECT * FROM event_keywords WHERE event_id=:eid";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':eid', $event['id'], PDO::PARAM_STR);
+            $stmt->execute();
+            $event['keywords'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        //Get Event Images
+        $event_images = null;
+        $sql = "SELECT * FROM event_images WHERE event_id=:eid";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':eid', $event['id'], PDO::PARAM_STR);
+            $stmt->execute();
+            $event_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        //echo '<pre>'; print_r($event_images); exit();
+
+        //Get Images
+        $event['images'] = array();
+        foreach($event_images as $ei)
+        {
+            $sql = "SELECT * FROM images WHERE id=:id";
+            if($stmt = $this->database->prepare($sql))
+            {
+                $stmt->bindParam(':id', $ei['image_id'], PDO::PARAM_STR);
+                $stmt->execute();
+                array_push($event['images'], $stmt->fetch(PDO::FETCH_ASSOC));
+            }
+        }
+
+        return $event;
+    }
+
+    //Search events based on search parameters
+    public function GetSearchResults($sql, $params = array())
     {
         //Get events based on query parameters
         if($stmt = $this->database->prepare($sql))
@@ -189,51 +256,56 @@ abstract class BaseModel
             $events[$count]['description'] = $e['description'];
             $events[$count]['privacy'] = $e['privacy'];
 
-            //Get Event Dates
-            $sql = "SELECT * FROM event_dates WHERE event_id=:eid";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':eid', $e['id'], PDO::PARAM_STR);
-                $stmt->execute();
-                $events[$count]['dates'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-
-            //Get Event Dates
-            $sql = "SELECT * FROM event_keywords WHERE event_id=:eid";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':eid', $e['id'], PDO::PARAM_STR);
-                $stmt->execute();
-                $events[$count]['keywords'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-
-            //Get Event Images
-            $sql = "SELECT * FROM event_images WHERE event_id=:eid";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':eid', $e['id'], PDO::PARAM_STR);
-                $stmt->execute();
-                $event_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-
-            //echo '<pre>'; print_r($event_images); exit();
-
-            //Get Images
-            foreach($event_images as $ei)
-            {
-                $sql = "SELECT * FROM images WHERE id=:id";
-                if($stmt = $this->database->prepare($sql))
-                {
-                    $stmt->bindParam(':id', $ei['image_id'], PDO::PARAM_STR);
-                    $stmt->execute();
-                    $events[$count]['images'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                }
-            }
+            $events[$count] = $this->GetEventRelatedData($events[$count]);
         }
 
         //echo '<pre>'; print_r($events); exit();
         return $events;
     }
+
+    //Get events based on location
+    public function GetEventsNearLocation($location)
+    {
+        if($location == null)
+        {
+            $sql = "SELECT * FROM events LIMIT 6";
+            if($stmt = $this->database->prepare($sql))
+            {
+                $stmt->execute();
+                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+            $events = array();
+            $count = 0;
+
+            foreach($row as $e)
+            {
+                //echo '<pre>'; print_r($e); exit();
+
+                $count++;
+                $events[$count] = array();
+
+                $events[$count]['id'] = $e['id'];
+                $events[$count]['user_id'] = $e['user_id'];
+                $events[$count]['location'] = $e['location'];
+                $events[$count]['price'] = $e['price'];
+                $events[$count]['bedrooms'] = $e['bedrooms'];
+                $events[$count]['bathrooms'] = $e['bathrooms'];
+                $events[$count]['type'] = $e['type'];
+                $events[$count]['name'] = $e['name'];
+                $events[$count]['description'] = $e['description'];
+                $events[$count]['privacy'] = $e['privacy'];
+
+                $events[$count] = $this->GetEventRelatedData($events[$count]);
+            }
+
+            //echo '<pre>'; print_r($events); exit();
+            return $events;
+        }
+
+    }
+
+
 
 
 
