@@ -5,7 +5,7 @@ return array
     //App Config
     'app_name'      => 'Openhaus',
     'environment'   => 'test',          //Change to production on deploy
-    'domain'        => 'openhaus.it',
+    'domain'        => 'openhaus.krftwrk.ca',
 
     //Database
     'db_location'   => 'localhost',
