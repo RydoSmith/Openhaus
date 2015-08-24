@@ -226,6 +226,10 @@ div.event-result:hover
 {
     cursor: pointer;
 }
+
+
+/* TOAST */
+.toast { background-color: #b71c1c; }
   
 
 

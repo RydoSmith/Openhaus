@@ -38,6 +38,7 @@ class EventModel extends BaseModel
         }
 
         $location = $_POST['location'];
+        $currency  = $_POST['currency'];
         $price  = $_POST['price'];
         $bedrooms = $_POST['bedrooms'];
         $bathrooms = $_POST['bathrooms'];
@@ -73,6 +74,7 @@ class EventModel extends BaseModel
             "id" => null,
             "user_id" => $this->view->account->id,
             "location" => $location,
+            "currency" => $currency,
             "price" => $price,
             "bedrooms" => $bedrooms,
             "bathrooms" => $bathrooms,
@@ -84,6 +86,7 @@ class EventModel extends BaseModel
 
         $sql = "INSERT INTO events (user_id,
           location,
+          currency,
           price,
           bedrooms,
           bathrooms,
@@ -94,6 +97,7 @@ class EventModel extends BaseModel
           created,
           updated) VALUES (:user_id,
             :location,
+            :currency,
             :price,
             :bedrooms,
             :bathrooms,
@@ -108,6 +112,7 @@ class EventModel extends BaseModel
         {
             $stmt->bindParam(':user_id', $event['user_id'], PDO::PARAM_STR);
             $stmt->bindParam(':location', $event['location'], PDO::PARAM_STR);
+            $stmt->bindParam(':currency', $event['currency'], PDO::PARAM_STR);
             $stmt->bindParam(':price', $event['price'], PDO::PARAM_STR);
             $stmt->bindParam(':bedrooms', $event['bedrooms'], PDO::PARAM_STR);
             $stmt->bindParam(':bathrooms', $event['bathrooms'], PDO::PARAM_STR);
@@ -480,6 +485,7 @@ class EventModel extends BaseModel
         {
             $sql = "INSERT INTO events (user_id,
               location,
+              currency,
               price,
               bedrooms,
               bathrooms,
@@ -490,6 +496,7 @@ class EventModel extends BaseModel
               created,
               updated) VALUES (:user_id,
                 :location,
+                'CAD',
                 :price,
                 :bedrooms,
                 :bathrooms,

@@ -1,5 +1,5 @@
 <div class="container-fix">
-    <form action="/event/create" method="post" autocomplete="off" enctype="multipart/form-data">
+    <form action="/event/create" method="post" autocomplete="off" enctype="multipart/form-data" id="event_form">
         <div class="page" id="page-1">
             <span class="page-header teal-text">
                 <div class="container">
@@ -18,7 +18,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col s12 m6 l6">
-                            <h5 class="teal-text" id="action-title">Pick a date & time</h5>
+                            <h5 class="teal-text" id="action-title">Choose an event date</h5>
                         </div>
                         <div class="col s6 m6 l6">
                             <h5 class="teal-text">Selected dates & times</h5>
@@ -104,7 +104,17 @@
                     <div class="row">
                         <div class="col s8 m8 l8">
                             <h5 class="grey-text">Listing Price</h5>
-                            <input placeholder="price" name="price" type="text" class="validate">
+                            <div class="input-field col s4 m4 l4">
+                                <select name="currency">
+                                    <option value="1" selected>CAD</option>
+                                    <option value="2">USD</option>
+                                    <option value="3">GBP</option>
+                                </select>
+                            </div>
+                            <div class="col s8 m8 l8">
+                                <input placeholder="price" name="price" id="price" type="text" class="validate" style="height: 4rem;">
+                            </div>
+
                         </div>
                     </div>
                     <div class="row">
@@ -147,7 +157,7 @@
                     </div>
                     <div class="row">
                         <div class="col s8 m8 l8">
-                            <h5 class="grey-text">Keywords</h5>
+                            <h5 class="grey-text">Keywords <span style="font-size: 12px">press space to enter your keyword</span></h5>
                             <input placeholder="unique features of your listing eg waterfront, rustic" id="keywords" type="text">
                             <ul class="tag-display">
 
@@ -160,22 +170,22 @@
                             <div class="row">
                                 <div class="col s3 m3 l3">
                                     <div class="image-upload">
-                                        <a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">add</i></a>
+                                        <a class="btn-floating btn-large waves-effect waves-light pink" style="pointer-events: none;"><i class="material-icons">add</i></a>
                                     </div>
                                 </div>
                                 <div class="col s3 m3 l3">
                                     <div class="image-upload">
-                                        <a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">add</i></a>
+                                        <a class="btn-floating btn-large waves-effect waves-light pink" style="pointer-events: none;"><i class="material-icons">add</i></a>
                                     </div>
                                 </div>
                                 <div class="col s3 m3 l3">
                                     <div class="image-upload">
-                                        <a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">add</i></a>
+                                        <a class="btn-floating btn-large waves-effect waves-light pink" style="pointer-events: none;"><i class="material-icons">add</i></a>
                                     </div>
                                 </div>
                                 <div class="col s3 m3 l3">
                                     <div class="image-upload">
-                                        <a class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">add</i></a>
+                                        <a class="btn-floating btn-large waves-effect waves-light pink" style="pointer-events: none;"><i class="material-icons">add</i></a>
                                     </div>
                                 </div>
                             </div>
@@ -213,13 +223,13 @@
                     <div class="row">
                         <div class="col s8 m8 l8">
                             <h5 class="grey-text">Event Name</h5>
-                            <input placeholder="Name your event" type="text"  name="event_name">
+                            <input placeholder="Name your event" type="text"  name="event_name" id="event_name">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s8 m8 l8">
                             <h5 class="grey-text">Event Description</h5>
-                            <textarea id="textarea1" class="materialize-textarea" placeholder="Describe what makes your open house unique" name="event_description"></textarea>
+                            <textarea id="event_description" class="materialize-textarea" placeholder="Describe what makes your open house unique" name="event_description"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -241,7 +251,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <button type="submit" class="waves-effect waves-light btn teal white-text">Finish</button>
+                            <button type="button" id="submit-btn" class="waves-effect waves-light btn teal white-text">Finish</button>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -257,6 +267,29 @@
 
         //Initialize controls
         $('select').material_select();
+
+        //
+        //Validation
+        //
+        var dateSet = false;
+
+        function addButtonValidation(message)
+        {
+            $('.next-btn').addClass('tooltipped');
+            $('.next-btn').attr('data-position', 'right');
+            $('.next-btn').attr('data-delay', '10');
+            $('.next-btn').attr('data-tooltip', message);
+        }
+
+        function removeButtonValidation()
+        {
+            $('.next-btn').removeClass('tooltipped');
+            $('.next-btn').removeAttr('data-position');
+            $('.next-btn').removeAttr('data-delay');
+            $('.next-btn').removeAttr('data-tooltip');
+        }
+
+
 
         //
         //Date functionality
@@ -292,6 +325,7 @@
                 }
                 else
                 {
+                    $('#action-title').html('Choose a start time');
                     $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + '</strong>. Now choose a start time.');
                     startTimePicker.pickatime("picker").open();
                 }
@@ -325,6 +359,7 @@
                 }
                 else
                 {
+                    $('#action-title').html('Choose an end time');
                     $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + "</strong> at <strong class=\"teal-text\">" + newDate.startTime + '</strong>. When does it end?');
                     endTimePicker.pickatime("picker").open();
                 }
@@ -355,6 +390,7 @@
                 }
                 else
                 {
+                    $('#action-title').html('Add another event date ');
                     if(selectedDates.length == 1)
                     {
                         $('.action-message').html('Your event begins on <strong class="teal-text">' + newDate.date + '</strong> from <strong class="teal-text">' + newDate.startTime + '</strong> to <strong class=\"teal-text\">' + newDate.endTime + '</strong>. You can add another date.');
@@ -367,6 +403,11 @@
                     }
 
                     //Clear new date after used in message
+                    if(!dateSet)
+                    {
+                        dateSet = true;
+                    }
+
                     newDate = {};
                 }
             },
@@ -387,8 +428,6 @@
                 }
             }
         });
-
-
 
         //Display dates in the UI
         function renderDates()
@@ -416,11 +455,63 @@
         //
 
 
+        //
+        //Multi-step page features
+        //
 
-        //Initialize multi-step page functionality
         var selectedPage = 1;
 
         $('.next-btn').click(function(){
+
+            //
+            //Page validation
+            //
+            if(selectedPage == 1)
+            {
+                if(!dateSet)
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please select a date!', 4000);
+                    return;
+                }
+            }
+            if(selectedPage == 2)
+            {
+                if(!$('#address').val())
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter an address', 4000);
+                    return;
+                }
+            }
+            if(selectedPage == 3)
+            {
+                var isInvalid = false;
+                //Price
+                if(!$('#price').val())
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter your listing price', 4000);
+                    isInvalid = true;
+                }
+                //Keywords
+                if(tags.length < 2)
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter at least 2 keywords', 4000);
+                    isInvalid = true;
+                }
+                //Images
+                if($('.image-added-field').length < 1)
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please add an image', 4000);
+                    isInvalid = true;
+                }
+
+                if(isInvalid){ return; }
+            }
+
+            //
+            //End Page Validation
+            //
+
+
             selectedPage++;
 
             hidePages();
@@ -467,10 +558,20 @@
         //
         //Google map autocomplete
         //
+
+        var mapFirstLoad = true;
+
         $('#address').geocomplete({
             map:  '#map',
             mapOptions: {
                 disableDefaultUI: true
+            }
+        }).bind("geocode:result", function(event, result){
+            if(mapFirstLoad)
+            {
+                $('#address').attr('placeholder', 'Example: ' + $('#address').val());
+                $('#address').val('');
+                mapFirstLoad = false;
             }
         });
         //end google map autocomplete
@@ -482,14 +583,11 @@
         var tags = [];
         $('body').keyup(function(e)
         {
-            if(e.keyCode == 32)
+            if(e.keyCode == 32 && $('#keywords').is(':focus') && $('#keywords').val().replace(/ /g,''))
             {
-                if($('#keywords').is(':focus'))
-                {
-                    tags.push($('#keywords').val());
-                    $('#keywords').val('');
-                    renderTags();
-                }
+                tags.push($('#keywords').val());
+                $('#keywords').val('');
+                renderTags();
             }
         });
 
@@ -529,10 +627,29 @@
 
         function fileUploaded(obj, guid)
         {
-            $('#img-guids').append('<input type="hidden" name="images[]" value="' + guid + '">');
+            $('#img-guids').append('<input type="hidden" class="image-added-field" name="images[]" value="' + guid + '">');
         }
 
         //End image upload
+
+
+        $('#submit-btn').click(function(){
+            if(selectedPage == 4)
+            {
+                if(!$('#event_name').val())
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter an event name', 4000);
+                    return;
+                }
+                if(!$('#event_description').val())
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter a description of your event', 4000);
+                    return;
+                }
+            }
+
+            $('#event_form').submit();
+        });
 
     });
 </script>
