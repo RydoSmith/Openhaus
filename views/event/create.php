@@ -26,12 +26,9 @@
                     </div>
                     <div class="row">
                         <div class="col s6 m6 l6">
-                            <p></p>
-                            <p class="action-message"></p>
-                            <input class="datepicker btn pink" placeholder="Choose a day" />
-                            <input class="timepicker btn pink" placeholder="Choose a time" style="display:none" />
-                            <div id="date-picker"></div>
-
+                            <p class="action-message">Choose the date you're hosting your event</p>
+                            <input class="datepicker btn pink" placeholder="Choose a day" style="visibility: hidden" />
+                            <input class="timepicker btn pink" placeholder="Choose a time" style="visibility: hidden" />
                         </div>
                         <div class="col s12 m6 l6">
                             <div class="selected-dates"><p class="teal-text">No dates have been selected...</p></div>
@@ -263,7 +260,96 @@
         //
         //Date functionality
         //
-        var selectedDates = [];
+        var newDate = {}; //used when adding a date object
+        var selectedDates = []; //stores the added dates
+
+        var isSelectingDate = true;
+        var isSelectingTime = false;
+        var dateIsSet = false;
+        var timeIsSet = false;
+        var datepicker = null;
+        var timepicker = null;
+
+        timepicker = $('.timepicker').pickatime({
+            today: null,
+            clear: null,
+            close: null,
+            onClose: function()
+            {
+                if(isSelectingTime)
+                {
+                    this.open();
+                }
+                else
+                {
+                    if(selectedDates.length == 1)
+                    {
+                        $('.action-message').html('Great! Your event starts on <strong class="teal-text">' + newDate.date + '</strong> at  <strong class="teal-text">' + newDate.time + '</strong>. You can add another date.');
+                        datepicker.pickadate("picker").open();
+                    }
+                    else
+                    {
+                        $('.action-message').html('Great! You\'ve added another date <strong class="teal-text">' + newDate.date + '</strong> at  <strong class="teal-text">' + newDate.time + '</strong>.');
+                        datepicker.pickadate("picker").open();
+                    }
+
+                    newDate = {};
+                    dateIsSet = false;
+                    timeIsSet = false;
+                }
+            },
+            onSet: function()
+            {
+                var selectedTime = this.get();
+                if(selectedTime)
+                {
+                    newDate.time = selectedTime;
+                    selectedDates.push(newDate);
+                    renderDates();
+                    timeIsSet = true;
+                    isSelectingTime = false;
+                    isSelectingDate = true;
+                }
+            }
+
+        });
+
+        datepicker = $('.datepicker').pickadate({
+            formatSubmit: 'yyyy/mm/dd',
+            hiddenName: true,
+            today: null,
+            clear: null,
+            close: null,
+            onClose: function()
+            {
+                if(isSelectingDate)
+                {
+                    this.open();
+                }
+                else
+                {
+                    if(isSelectingTime)
+                    {
+                        $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + '</strong>. Now choose a time.');
+                        timepicker.pickatime("picker").open();
+                    }
+                }
+            },
+            onSet: function(v)
+            {
+                var selectedDate = this.get();
+                if(selectedDate)
+                {
+                    newDate = { 'id': guid(), 'date': selectedDate };
+                    dateIsSet = true;
+                    isSelectingDate = false;
+                    isSelectingTime = true;
+                }
+            },
+            onStart: function() {
+                this.open()
+            }
+        });
 
         //Display dates in the UI
         function renderDates()
@@ -279,110 +365,18 @@
                 sd.append(createDateCard(selectedDates[i]));
             }
         }
+
         function createDateCard(d)
         {
             //Create the UI element to be appended
             return "<span class=\"date-card\">" + d.date + " at " + d.time + "</span><input type=\"hidden\" name=\"dates[]\" value=\"" + d.date + "-" + d.time  + "\"/>";
         }
 
-        var newDate = {};
-        var dateIsSet = false;
-        var timeIsSet = false;
-
-        $('.timepicker').pickatime({
-            today: null,
-            clear: null,
-            close: null,
-            onOpen: function()
-            {
-                $('.datepicker').hide();
-                $('.timepicker').hide();
-                $('.action-message').hide();
-            },
-            onClose: function()
-            {
-                $('.timepicker').val('');
-                $('.action-message').show();
-                if(!timeIsSet)
-                {
-                    $('.timepicker').show();
-                }
-                else
-                {
-                    $('.datepicker').show();
-
-                    if(selectedDates.length == 1)
-                    {
-                        $('.action-message').html('Great! Your event starts on <strong class="teal-text">' + newDate.date + '</strong> at  <strong class="teal-text">' + newDate.time + '</strong>. ' +
-                        ' <br><br><br> You can add another date and time to your event <br> or continue to the next step.');
-                        $('.datepicker').attr('placeholder', 'Add more days');
-                    }
-                    else
-                    {
-                        $('.action-message').html('Great! You\'ve added another date <strong class="teal-text">' + newDate.date + '</strong> at  <strong class="teal-text">' + newDate.time + '</strong>. ' + ' <br><br><br> You can add another date and time to your event <br> or continue to the next step.');
-                        $('.datepicker').attr('placeholder', 'Add more days');
-                    }
-                    newDate = {};
-                    dateIsSet = false;
-                    timeIsSet = false;
-
-                }
+        //
+        //End date features
+        //
 
 
-            },
-            onSet: function()
-            {
-                var selectedTime = this.get();
-                if(selectedTime)
-                {
-                    newDate.time = selectedTime;
-                    selectedDates.push(newDate);
-                    renderDates();
-                    timeIsSet = true;
-                }
-            }
-
-        });
-
-        $('.datepicker').pickadate({
-            container: '#date-picker',
-            formatSubmit: 'yyyy/mm/dd',
-            hiddenName: true,
-            today: null,
-            clear: null,
-            close: null,
-            onOpen: function()
-            {
-                $('.action-message').hide();
-                $('.datepicker').hide();
-                $('.timepicker').hide();
-            },
-            onClose: function()
-            {
-                $('.action-message').show();
-                $('.datepicker').val('');
-                if(!dateIsSet)
-                {
-                    $('.datepicker').show();
-                }
-                else
-                {
-                    $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + '</strong>. Now choose a time.');
-                    $('.timepicker').show();
-                }
-
-
-            },
-            onSet: function(v)
-            {
-                var selectedDate = this.get();
-                if(selectedDate)
-                {
-                    newDate = { 'id': guid(), 'date': selectedDate };
-                    dateIsSet = true;
-                }
-            }
-        });
 
         //Initialize multi-step page functionality
         var selectedPage = 1;
