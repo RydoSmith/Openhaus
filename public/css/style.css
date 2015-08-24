@@ -221,4 +221,11 @@ div.event-result:hover
     float: left;
 }
 
+/*home page*/
+.home-event-display:hover
+{
+    cursor: pointer;
+}
+  
+
 

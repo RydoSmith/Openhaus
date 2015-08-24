@@ -49,21 +49,30 @@
 </div>
 <div class="container">
     <div class="row">
-        <p class="teal-text">Find the closest open house near me.</p>
+        <div class="col s12 m12 l12">
+            <p class="blue-grey-text">Find the <span class="pink-text">closest</span> open house near me.</p>
+        </div>
         <?php foreach($model->events as $event): ?>
-            <?php //print_r($event);exit(); ?>
             <div class="col s12 m6 l4">
-                <div style="width: 100%;">
-                    <div style="width: 100%; height: 180px; overflow: hidden; background-image: url(<?=$event['images'][0]['href']?>); background-size: 100%; background-repeat: no-repeat;">
-
+                <div class="card hoverable home-event-display" data-event-id="<?= $event['id'] ?>">
+                    <div class="card-image waves-effect waves-block waves-light" style="height: 180px; overflow: hidden;">
+                        <img src="<?=$event['images'][0]['href']?>">
+                    </div>
+                    <div class="card-content grey lighten-4">
+                        <p class="blue-grey-text" style="font-size: 18px;">
+                            <i class="material-icons tiny">info_outline</i>
+                            <span><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</span>
+                        </p>
+                        <p class="blue-grey-text" style="height: 22px; overflow: hidden;">
+                            <i class="material-icons tiny">location_on</i>
+                            <span><?=$event['location']?></span>
+                        </p>
+                        <p class="blue-grey-text" style="font-size: 18px;">
+                            <i class="material-icons tiny">schedule</i>
+                            <span><?= date("D, F jS", strtotime($event['dates'][0]['date']));?>, <?= date("g A", strtotime($event['dates'][0]['time']));?></span>
+                        </p>
                     </div>
                 </div>
-                <div style="background-color: #efefef; width: 100%; padding: 10px; margin-bottom: 20px;">
-                    <p class="blue-grey-text"><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</p>
-                    <p class="blue-grey-text" style="height: 22px; overflow: hidden;"><?=$event['location']?></p>
-                    <p class="blue-grey-text"><?= date("F jS", strtotime($event['dates'][0]['date']));?></p>
-                </div>
-
             </div>
         <?php endforeach; ?>
     </div>
@@ -105,6 +114,11 @@
         $('.location-select').click(function(){
             $('#location-search-value').val($(this).attr('data-value'));
             $('#location-select-display').html($(this).html());
+        });
+
+        //Redirect to event on click
+        $('.home-event-display').click(function(){
+            window.location.href = "/event/detail/" + $(this).attr('data-event-id');
         });
 
     });

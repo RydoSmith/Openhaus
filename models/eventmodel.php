@@ -89,7 +89,9 @@ class EventModel extends BaseModel
           type,
           name,
           description,
-          privacy) VALUES (:user_id,
+          privacy,
+          created,
+          updated) VALUES (:user_id,
             :location,
             :price,
             :bedrooms,
@@ -97,7 +99,9 @@ class EventModel extends BaseModel
             :type,
             :name,
             :description,
-            :privacy)";
+            :privacy,
+            NOW(),
+            NOW())";
 
         if($stmt = $this->database->prepare($sql))
         {
@@ -470,7 +474,9 @@ class EventModel extends BaseModel
               type,
               name,
               description,
-              privacy) VALUES (:user_id,
+              privacy,
+              created,
+              updated) VALUES (:user_id,
                 :location,
                 :price,
                 :bedrooms,
@@ -478,7 +484,9 @@ class EventModel extends BaseModel
                 :type,
                 :name,
                 :description,
-                :privacy
+                :privacy,
+                NOW(),
+                NOW()
             )";
 
             if($stmt = $this->database->prepare($sql))

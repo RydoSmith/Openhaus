@@ -268,7 +268,7 @@ abstract class BaseModel
     {
         if($location == null)
         {
-            $sql = "SELECT * FROM events LIMIT 6";
+            $sql = "SELECT * FROM events ORDER BY created DESC LIMIT 6";
             if($stmt = $this->database->prepare($sql))
             {
                 $stmt->execute();
