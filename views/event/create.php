@@ -26,12 +26,13 @@
                     </div>
                     <div class="row">
                         <div class="col s6 m6 l6">
-                            <p class="action-message">Choose the date you're hosting your event</p>
+                            <p class="action-message" style="font-size: 12px; padding-bottom: 10px;">Choose the date you're hosting your event</p>
                             <input class="datepicker btn pink" placeholder="Choose a day" style="visibility: hidden" />
-                            <input class="timepicker btn pink" placeholder="Choose a time" style="visibility: hidden" />
+                            <input class="timepicker-start btn pink" placeholder="Choose a time" style="visibility: hidden" />
+                            <input class="timepicker-end btn pink" placeholder="Choose a time" style="visibility: hidden" />
                         </div>
                         <div class="col s12 m6 l6">
-                            <div class="selected-dates"><p class="teal-text">No dates have been selected...</p></div>
+                            <div class="selected-dates"><p class="teal-text"><strong>No dates have been selected</strong></p></div>
                         </div>
                     </div>
                 </div>
@@ -260,61 +261,24 @@
         //
         //Date functionality
         //
+
+        $('.datepicker').hide();
+        $('.timepicker-start').hide();
+        $('.timepicker-end').hide();
+
+
         var newDate = {}; //used when adding a date object
         var selectedDates = []; //stores the added dates
 
         var isSelectingDate = true;
-        var isSelectingTime = false;
-        var dateIsSet = false;
-        var timeIsSet = false;
-        var datepicker = null;
-        var timepicker = null;
+        var isSelectingStartTime = false;
+        var isSelectingEndTime = false;
 
-        timepicker = $('.timepicker').pickatime({
-            today: null,
-            clear: null,
-            close: null,
-            onClose: function()
-            {
-                if(isSelectingTime)
-                {
-                    this.open();
-                }
-                else
-                {
-                    if(selectedDates.length == 1)
-                    {
-                        $('.action-message').html('Great! Your event starts on <strong class="teal-text">' + newDate.date + '</strong> at  <strong class="teal-text">' + newDate.time + '</strong>. You can add another date.');
-                        datepicker.pickadate("picker").open();
-                    }
-                    else
-                    {
-                        $('.action-message').html('Great! You\'ve added another date <strong class="teal-text">' + newDate.date + '</strong> at  <strong class="teal-text">' + newDate.time + '</strong>.');
-                        datepicker.pickadate("picker").open();
-                    }
+        var datePicker = null;
+        var startTimePicker = null;
+        var endTimePicker = null;
 
-                    newDate = {};
-                    dateIsSet = false;
-                    timeIsSet = false;
-                }
-            },
-            onSet: function()
-            {
-                var selectedTime = this.get();
-                if(selectedTime)
-                {
-                    newDate.time = selectedTime;
-                    selectedDates.push(newDate);
-                    renderDates();
-                    timeIsSet = true;
-                    isSelectingTime = false;
-                    isSelectingDate = true;
-                }
-            }
-
-        });
-
-        datepicker = $('.datepicker').pickadate({
+        datePicker = $('.datepicker').pickadate({
             formatSubmit: 'yyyy/mm/dd',
             hiddenName: true,
             today: null,
@@ -328,11 +292,8 @@
                 }
                 else
                 {
-                    if(isSelectingTime)
-                    {
-                        $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + '</strong>. Now choose a time.');
-                        timepicker.pickatime("picker").open();
-                    }
+                    $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + '</strong>. Now choose a start time.');
+                    startTimePicker.pickatime("picker").open();
                 }
             },
             onSet: function(v)
@@ -341,15 +302,93 @@
                 if(selectedDate)
                 {
                     newDate = { 'id': guid(), 'date': selectedDate };
-                    dateIsSet = true;
+
                     isSelectingDate = false;
-                    isSelectingTime = true;
+                    isSelectingStartTime = true;
+                    isSelectingEndTime = true;
                 }
             },
             onStart: function() {
                 this.open()
             }
         });
+
+        startTimePicker = $('.timepicker-start').pickatime({
+            today: null,
+            clear: null,
+            close: null,
+            onClose: function()
+            {
+                if(isSelectingStartTime)
+                {
+                    this.open();
+                }
+                else
+                {
+                    $('.action-message').html('You have selected <strong class="teal-text">' + newDate.date + "</strong> at <strong class=\"teal-text\">" + newDate.startTime + '</strong>. When does it end?');
+                    endTimePicker.pickatime("picker").open();
+                }
+            },
+            onSet: function()
+            {
+                var selectedTime = this.get();
+                if(selectedTime)
+                {
+                    newDate.startTime = selectedTime;
+
+                    isSelectingEndTime = true;
+                    isSelectingStartTime = false;
+                    isSelectingDate = false;
+                }
+            }
+        });
+
+        endTimePicker = $('.timepicker-end').pickatime({
+            today: null,
+            clear: null,
+            close: null,
+            onClose: function()
+            {
+                if(isSelectingEndTime)
+                {
+                    this.open();
+                }
+                else
+                {
+                    if(selectedDates.length == 1)
+                    {
+                        $('.action-message').html('Your event begins on <strong class="teal-text">' + newDate.date + '</strong> from <strong class="teal-text">' + newDate.startTime + '</strong> to <strong class=\"teal-text\">' + newDate.endTime + '</strong>. You can add another date.');
+                        datePicker.pickadate("picker").open();
+                    }
+                    else
+                    {
+                        $('.action-message').html('Great! You\'ve added another date <strong class="teal-text">' + newDate.date + '</strong> from <strong class="teal-text">' + newDate.startTime + '</strong> to <strong class=\"teal-text\">' + newDate.endTime + '</strong>. You can add another date.');
+                        datePicker.pickadate("picker").open();
+                    }
+
+                    //Clear new date after used in message
+                    newDate = {};
+                }
+            },
+            onSet: function()
+            {
+                var selectedTime = this.get();
+                if(selectedTime)
+                {
+                    newDate.endTime = selectedTime;
+
+                    selectedDates.push(newDate);
+
+                    renderDates();
+
+                    isSelectingEndTime = false;
+                    isSelectingStartTime = false;
+                    isSelectingDate = true;
+                }
+            }
+        });
+
+
 
         //Display dates in the UI
         function renderDates()
@@ -369,7 +408,7 @@
         function createDateCard(d)
         {
             //Create the UI element to be appended
-            return "<span class=\"date-card\">" + d.date + " at " + d.time + "</span><input type=\"hidden\" name=\"dates[]\" value=\"" + d.date + "-" + d.time  + "\"/>";
+            return "<span class=\"date-card\">On " + d.date + " from " + d.startTime + " to " + d.endTime + "</span><input type=\"hidden\" name=\"dates[]\" value=\"" + d.date + "-" + d.startTime + "-" + d.endTime + "\"/>";
         }
 
         //

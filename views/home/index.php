@@ -67,9 +67,9 @@
                             <i class="material-icons tiny">location_on</i>
                             <span><?=$event['location']?></span>
                         </p>
-                        <p class="blue-grey-text" style="font-size: 18px;">
+                        <p class="blue-grey-text">
                             <i class="material-icons tiny">schedule</i>
-                            <span><?= date("D, F jS", strtotime($event['dates'][0]['date']));?>, <?= date("g A", strtotime($event['dates'][0]['time']));?></span>
+                            <span><?= date("D, M jS", strtotime($event['dates'][0]['date']));?> &nbsp; <?= date("g A", strtotime($event['dates'][0]['start_time']));?>-<?= date("g A", strtotime($event['dates'][0]['end_time']));?></span>
                         </p>
                     </div>
                 </div>

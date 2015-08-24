@@ -32,7 +32,8 @@ class EventModel extends BaseModel
             $dates[$i] = array
             (
                 'date' => date('Y-m-d', strtotime(str_replace('-', '/', $parts[0]))),
-                'time' => date('H:i:s', strtotime($parts[1]))
+                'start_time' => date('H:i:s', strtotime($parts[1])),
+                'end_time' => date('H:i:s', strtotime($parts[2]))
              );
         }
 
@@ -124,12 +125,13 @@ class EventModel extends BaseModel
         //
         foreach($dates as $date)
         {
-            $sql = "INSERT INTO event_dates (event_id, date, time) VALUES (:event_id, :date, :time)";
+            $sql = "INSERT INTO event_dates (event_id, date, start_time, end_time) VALUES (:event_id, :date, :start_time, :end_time)";
             if($stmt = $this->database->prepare($sql))
             {
                 $stmt->bindParam(':event_id', $event['id'], PDO::PARAM_STR);
                 $stmt->bindParam(':date', $date['date'], PDO::PARAM_STR);
-                $stmt->bindParam(':time', $date['time'], PDO::PARAM_STR);
+                $stmt->bindParam(':start_time', $date['start_time'], PDO::PARAM_STR);
+                $stmt->bindParam(':end_time', $date['end_time'], PDO::PARAM_STR);
 
                 $stmt->execute();
             }
@@ -403,52 +405,62 @@ class EventModel extends BaseModel
             array
             (
                 'date'=>'2015-10-10',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-10',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-12',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-13',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-14',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-15',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-16',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-18',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-18',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
             array
             (
                 'date'=>'2015-10-18',
-                'time'=>'09:00:00'
+                'start_time'=>'09:00:00',
+                'end_time'=>'11:00:00'
             ),
         );
 
@@ -506,21 +518,23 @@ class EventModel extends BaseModel
                 $event_id = $this->database->lastInsertId();
             }
 
-            $sql = "INSERT INTO event_dates (event_id, date, time) VALUES (:event_id, :date, :time)";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
-                $stmt->bindParam(':date', $dates[$count]['date'], PDO::PARAM_STR);
-                $stmt->bindParam(':time', $dates[$count]['time'], PDO::PARAM_STR);
-
-                $stmt->execute();
-            }
-            $sql = "INSERT INTO event_dates (event_id, date, time) VALUES (:event_id, :date, :time)";
+            $sql = "INSERT INTO event_dates (event_id, date, start_time, end_time) VALUES (:event_id, :date, :start_time, :end_time)";
             if($stmt = $this->database->prepare($sql))
             {
                 $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
                 $stmt->bindParam(':date', $dates[rand(0, count($dates)-1)]['date'], PDO::PARAM_STR);
-                $stmt->bindParam(':time', $dates[rand(0, count($dates)-1)]['time'], PDO::PARAM_STR);
+                $stmt->bindParam(':start_time', $dates[rand(0, count($dates)-1)]['start_time'], PDO::PARAM_STR);
+                $stmt->bindParam(':end_time', $dates[rand(0, count($dates)-1)]['end_time'], PDO::PARAM_STR);
+
+                $stmt->execute();
+            }
+            $sql = "INSERT INTO event_dates (event_id, date, start_time, end_time) VALUES (:event_id, :date, :start_time, :end_time)";
+            if($stmt = $this->database->prepare($sql))
+            {
+                $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+                $stmt->bindParam(':date', $dates[rand(0, count($dates)-1)]['date'], PDO::PARAM_STR);
+                $stmt->bindParam(':start_time', $dates[rand(0, count($dates)-1)]['start_time'], PDO::PARAM_STR);
+                $stmt->bindParam(':end_time', $dates[rand(0, count($dates)-1)]['end_time'], PDO::PARAM_STR);
 
                 $stmt->execute();
             }
