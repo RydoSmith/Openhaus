@@ -8,7 +8,7 @@
     <div class="searchbar" style="width: 100%; min-height: 60px; background-color: #009688; display: inline-block; text-align: center;">
         <div class="container">
             <div class="col s12 m12 l12">
-                <form action="/event/search" method="post">
+                <form action="/event/search/" method="get">
                     <h6 class="white-text" style="line-height: 60px; margin: 0;">
                         I'm looking for a
                         <a class="dropdown-button btn" href="#" data-activates="bedroomselect" style="margin-bottom: 5px; background: none !important;" id="bedroom-select-display">1 bedroom</a>

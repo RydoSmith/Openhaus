@@ -26,67 +26,68 @@ class EventModel extends BaseModel
         //
         //Get posted variables
         //
+        $this->view->post = array
+        (
+            'location' => strtolower(trim($_POST['location'])),
+            'currency' => $_POST['currency'],
+            'price'  => trim($_POST['price']),
+            'bedrooms' => $_POST['bedrooms'],
+            'bathrooms' => $_POST['bathrooms'],
+            'type' => $_POST['type'],
+            'tags' => $_POST['tags'],
+            'images' => $_POST['images'],
+            'name' => strtolower(trim($_POST['name'])),
+            'description' => strtolower(trim($_POST['description'])),
+            'privacy' => $_POST['privacy']
+        );
 
         //Get Dates and Times and convert to MySQL Date and Time format
-        $dates = array(); //[array[date, time]]
+        $this->view->post['dates'] = array(); //[array[date, time]]
         for($i = 0; $i < count($_POST['dates']); $i++)
         {
             $parts = explode('-', $_POST['dates'][$i]);
-            $dates[$i] = array
+            $tmp = array
             (
                 'date' => date('Y-m-d', strtotime(str_replace('-', '/', $parts[0]))),
                 'start_time' => date('H:i:s', strtotime($parts[1])),
                 'end_time' => date('H:i:s', strtotime($parts[2]))
              );
+            array_push($this->view->post['dates'], $tmp);
         }
 
-        $location = $_POST['location'];
-        $currency  = $_POST['currency'];
-        $price  = $_POST['price'];
-        $bedrooms = $_POST['bedrooms'];
-        $bathrooms = $_POST['bathrooms'];
-        $type = $_POST['type'];
-
-        //Get selected tags
-        $tags = array();
-        foreach($_POST['tags'] as $tag)
-        {
-            array_push($tags, $tag);
-        }
-
-        //Get image guids
-        $images = array();
-        foreach($_POST['images'] as $image)
-        {
-            array_push($images, $image);
-        }
-
-        $event_name = $_POST['event_name'];
-        $event_description= $_POST['event_description'];
-        $privacy = $_POST['privacy'];
+        //echo '<pre>'; print_r($this->view->post); exit();
 
         //
-        //TO DO: VALIDATION !!!!!!IMPORTANT!!!!!!
+        //Validation
+        //
+//        if($this->view->post['location'])
+//        {
+//            $this->addModelError('location', new ModelError('Location is required'));
+//        }
+//
+//        if(is_numeric($this->view->post['location']))
+//        {
+//            $this->addModelError('price', new ModelError('Not a valid number'));
+//        }
+//
+//        if($this->view->post['name'])
+//        {
+//            $this->addModelError('name', new ModelError('Name is required'));
+//        }
+//
+//        if($this->view->post['description'])
+//        {
+//            $this->addModelError('description', new ModelError('Description is required'));
+//        }
+//
+//        if($this->hasError()){ return; }
+        //
+        //End Validation
         //
 
         //
-        //INSERT EVENT AND GET event_id variable
+        //Insert Event
         //
-        $event = array
-        (
-            "id" => null,
-            "user_id" => $this->view->account->id,
-            "location" => $location,
-            "currency" => $currency,
-            "price" => $price,
-            "bedrooms" => $bedrooms,
-            "bathrooms" => $bathrooms,
-            "type" => $type,
-            "name" => $event_name,
-            "description" => $event_description,
-            "privacy" => $privacy
-        );
-
         $sql = "INSERT INTO events (user_id,
           location,
           currency,
@@ -113,30 +114,30 @@ class EventModel extends BaseModel
 
         if($stmt = $this->database->prepare($sql))
         {
-            $stmt->bindParam(':user_id', $event['user_id'], PDO::PARAM_STR);
-            $stmt->bindParam(':location', $event['location'], PDO::PARAM_STR);
-            $stmt->bindParam(':currency', $event['currency'], PDO::PARAM_STR);
-            $stmt->bindParam(':price', $event['price'], PDO::PARAM_STR);
-            $stmt->bindParam(':bedrooms', $event['bedrooms'], PDO::PARAM_STR);
-            $stmt->bindParam(':bathrooms', $event['bathrooms'], PDO::PARAM_STR);
-            $stmt->bindParam(':type', $event['type'], PDO::PARAM_STR);
-            $stmt->bindParam(':name', $event['name'], PDO::PARAM_STR);
-            $stmt->bindParam(':description', $event['description'], PDO::PARAM_STR);
-            $stmt->bindParam(':privacy', $event['privacy'], PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $this->view->account->id, PDO::PARAM_STR);
+            $stmt->bindParam(':location', $this->view->post['location'], PDO::PARAM_STR);
+            $stmt->bindParam(':currency', $this->view->post['currency'], PDO::PARAM_STR);
+            $stmt->bindParam(':price', $this->view->post['price'], PDO::PARAM_STR);
+            $stmt->bindParam(':bedrooms', $this->view->post['bedrooms'], PDO::PARAM_STR);
+            $stmt->bindParam(':bathrooms', $this->view->post['bathrooms'], PDO::PARAM_STR);
+            $stmt->bindParam(':type', $this->view->post['type'], PDO::PARAM_STR);
+            $stmt->bindParam(':name', $this->view->post['name'], PDO::PARAM_STR);
+            $stmt->bindParam(':description', $this->view->post['description'], PDO::PARAM_STR);
+            $stmt->bindParam(':privacy', $this->view->post['privacy'], PDO::PARAM_STR);
 
             $stmt->execute();
-            $event['id'] = $this->database->lastInsertId();
+            $this->view->post['id'] = $this->database->lastInsertId();
         }
 
         //
-        //INSERT EVENT_DATES
+        //Insert event dates
         //
-        foreach($dates as $date)
+        foreach($this->view->post['dates'] as $date)
         {
-            $sql = "INSERT INTO event_dates (event_id, date, start_time, end_time) VALUES (:event_id, :date, :start_time, :end_time)";
+            $sql = "INSERT INTO event_dates (event_id, date, start_time, end_time, created, updated) VALUES (:event_id, :date, :start_time, :end_time, NOW(), NOW())";
             if($stmt = $this->database->prepare($sql))
             {
-                $stmt->bindParam(':event_id', $event['id'], PDO::PARAM_STR);
+                $stmt->bindParam(':event_id', $this->view->post['id'], PDO::PARAM_STR);
                 $stmt->bindParam(':date', $date['date'], PDO::PARAM_STR);
                 $stmt->bindParam(':start_time', $date['start_time'], PDO::PARAM_STR);
                 $stmt->bindParam(':end_time', $date['end_time'], PDO::PARAM_STR);
@@ -146,14 +147,14 @@ class EventModel extends BaseModel
         }
 
         //
-        //INSERT EVENT_KEYWORDS
+        //Insert event keywords
         //
-        foreach($tags as $tag)
+        foreach($this->view->post['tags'] as $tag)
         {
-            $sql = "INSERT INTO event_keywords (event_id, tag) VALUES (:event_id, :tag)";
+            $sql = "INSERT INTO event_keywords (event_id, tag, created, updated) VALUES (:event_id, :tag, NOW(), NOW())";
             if($stmt = $this->database->prepare($sql))
             {
-                $stmt->bindParam(':event_id', $event['id'], PDO::PARAM_STR);
+                $stmt->bindParam(':event_id', $this->view->post['id'], PDO::PARAM_STR);
                 $stmt->bindParam(':tag', $tag, PDO::PARAM_STR);
 
                 $stmt->execute();
@@ -161,39 +162,29 @@ class EventModel extends BaseModel
         }
 
         //
-        //INSERT IMAGES AND EVENT_IMAGES
+        //Insert event images
         //
         $insertedImageId = null;
-        foreach($images as $image)
+        foreach($this->view->post['images'] as $image)
         {
-            $sql = "INSERT INTO images (href) VALUES (:href)";
+            $sql = "INSERT INTO event_images (event_id, href, created, updated) VALUES (:event_id, :href, NOW(), NOW())";
             if($stmt = $this->database->prepare($sql))
             {
                 $href = '/public/app_data/event_images/'.$image;
+                $stmt->bindParam(':event_id', $this->view->post['id'], PDO::PARAM_STR);
                 $stmt->bindParam(':href', $href, PDO::PARAM_STR);
-
-                $stmt->execute();
-                $insertedImageId = $this->database->lastInsertId();
-            }
-
-            $sql = "INSERT INTO event_images (event_id, image_id) VALUES (:eid, :iid)";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':eid', $event['id'], PDO::PARAM_STR);
-                $stmt->bindParam(':iid', $insertedImageId, PDO::PARAM_STR);
 
                 $stmt->execute();
             }
         }
-
-        $this->eventid = $event['id'];
     }
 
     //
     //Seaching
     //
-    public function Search_POST()
+    public function Search($bedrooms, $type, $location)
     {
+
         //Get account info if logged in
         if(parent::IsUserLoggedIn())
         {
@@ -201,9 +192,9 @@ class EventModel extends BaseModel
         }
 
         //Get Posted Variables
-        $bedrooms = $_POST['bedrooms'];
-        $type = $_POST['type'];
-        $location = $_POST['location'];
+        $bedrooms = $bedrooms[1];
+        $type = $type[1];
+        $location = $location[1];
 
         //
         //IMPORTANT!!!! Validation here

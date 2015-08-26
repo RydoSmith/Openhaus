@@ -2,20 +2,16 @@
     <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">openhaus.it</a>
         <ul class="right hide-on-med-and-down">
             <?php if(isset($_SESSION['LoggedIn']) && $_SESSION['LoggedIn'] == 1): ?>
-                <!-- Dropdown Trigger -->
-                <a class='dropdown-button btn' href='#' data-activates='dropdown1' style="margin-left: 20px;margin-top: -3px;"><?= $model->account->first_name; ?></a>
-                <!-- Dropdown Structure -->
-                <ul id='dropdown1' class='dropdown-content' style="width: 200px; !important; ">
-                    <li><a href="#!">notifications</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#!">dashboard</a></li>
-                    <li><a href="#!">my listings</a></li>
-                    <li><a href="#!">my events</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#!">settings</a></li>
-                </ul>
-                <li><a href="/account/logout">LOGOUT</a></li>
+
                 <a href="/event/create" class="waves-effect waves-light btn pink btn-nav">CREATE EVENT</a>
+                <div style="padding-top: 12px; float: right; margin-left: 10px">
+                    <span style="display: inline-block; padding: 0; margin: 0; margin-top: -20px; line-height: 20px;">Hi, <?= $model->account->first_name; ?>!
+                    <br>
+                        <a href="/account/logout" style="padding: 0; font-size: 12px">LOGOUT</a>
+                    </span>
+                    <img src="<?= $model->account->image ?>" alt="" class="circle responsive-img" style="width: 38px;">
+                </div>
+
             <?php else: ?>
                 <li><a href="/account/signup">SIGN UP</a></li>
                 <li><a href="/account/login">LOGIN</a></li>

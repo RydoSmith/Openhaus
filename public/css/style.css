@@ -187,10 +187,10 @@ ul.tag-display li
 div.event-result
 {
     padding: 0 20px;
+    border-bottom: 1px dashed #696969;
 }
 div.event-result:hover
 {
-    background-color: #efefef;
     cursor: pointer;
 }
 
@@ -213,11 +213,11 @@ div.event-result:hover
 
 .event-result-content
 {
-    min-height: 180px;
-    background-color: #efefef;
+    min-height: 150px;
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    padding-left: 30px;
+    margin-bottom: 0px;
     float: left;
 }
 

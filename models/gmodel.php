@@ -256,21 +256,12 @@ class GModel extends BaseModel
             for($i = 0; $i < 3; $i++)
             {
                 $image = rand(1, 3).'.jpg';
-                $sql = "INSERT INTO images (href) VALUES (:href)";
+                $sql = "INSERT INTO event_images (event_id, href, created, updated) VALUES (:event_id, :href, NOW(), NOW())";
                 if($stmt = $this->database->prepare($sql))
                 {
                     $href = '/public/app_data/event_images/'.$image;
+                    $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
                     $stmt->bindParam(':href', $href, PDO::PARAM_STR);
-
-                    $stmt->execute();
-                    $insertedImageId = $this->database->lastInsertId();
-                }
-
-                $sql = "INSERT INTO event_images (event_id, image_id) VALUES (:eid, :iid)";
-                if($stmt = $this->database->prepare($sql))
-                {
-                    $stmt->bindParam(':eid', $event_id, PDO::PARAM_STR);
-                    $stmt->bindParam(':iid', $insertedImageId, PDO::PARAM_STR);
 
                     $stmt->execute();
                 }

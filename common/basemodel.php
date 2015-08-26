@@ -133,6 +133,15 @@ abstract class BaseModel
             $this->view->account->last_name = $row['last_name'];
             $this->view->account->full_name = $row['first_name'].' '.$row['last_name'];
         }
+
+        //Get image
+        $sql = "SELECT href FROM user_images WHERE user_id=:id LIMIT 1";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':id', $this->view->account->id, PDO::PARAM_STR);
+            $stmt->execute();
+            $this->view->account->image = $stmt->fetch(PDO::FETCH_ASSOC)['href'];
+        }
     }
 
     //Is User Logged In
@@ -202,6 +211,16 @@ abstract class BaseModel
                             $r['user'] = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         }
+
+                        //Get user image
+                        $sql = "SELECT href FROM user_images WHERE user_id=:user_id LIMIT 1";
+                        if($stmt = $this->database->prepare($sql))
+                        {
+                            $stmt->bindParam(':user_id', $r['user']['id'], PDO::PARAM_STR);
+                            $stmt->execute();
+                            $r['user']['image'] = $stmt->fetch(PDO::FETCH_ASSOC);
+                        }
+
                         array_push($event['rsvps'] , $r);
                     }
                 }
@@ -218,28 +237,12 @@ abstract class BaseModel
         }
 
         //Get Event Images
-        $event_images = null;
-        $sql = "SELECT * FROM event_images WHERE event_id=:eid";
+        $sql = "SELECT * FROM event_images WHERE event_id=:event_id";
         if($stmt = $this->database->prepare($sql))
         {
-            $stmt->bindParam(':eid', $event['id'], PDO::PARAM_STR);
+            $stmt->bindParam(':event_id', $event['id'], PDO::PARAM_STR);
             $stmt->execute();
-            $event_images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        //echo '<pre>'; print_r($event_images); exit();
-
-        //Get Images
-        $event['images'] = array();
-        foreach($event_images as $ei)
-        {
-            $sql = "SELECT * FROM images WHERE id=:id";
-            if($stmt = $this->database->prepare($sql))
-            {
-                $stmt->bindParam(':id', $ei['image_id'], PDO::PARAM_STR);
-                $stmt->execute();
-                array_push($event['images'], $stmt->fetch(PDO::FETCH_ASSOC));
-            }
+            $event['images'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return $event;

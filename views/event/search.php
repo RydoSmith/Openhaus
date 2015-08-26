@@ -1,7 +1,7 @@
 <div class="container" style="padding-top: 80px;">
     <div class="row">
         <div class="col s12 m12 l12">
-            <form action="/event/search" method="post" style="margin-bottom: 20px;">
+            <form action="/event/search" method="get" style="margin-bottom: 20px;">
                 <h6 class="grey-text">Search</h6>
                 <h6 class="teal-text" style="line-height: 30px;">
                     I'm looking for a
@@ -82,7 +82,7 @@
                                 <div class="event-result-content">
                                     <div class="row">
                                         <div class="col s12 m8 l8">
-                                            <h5 style="margin: 0" class="teal-text">$<?=$event['price']?></h5>
+                                            <h5 style="margin: 0" class="teal-text">$<?= number_format($event['price'], 2, ".", "," ); ?></h5>
                                             <p style="margin: 0 0 30px 0" class="blue-grey-text"><?=$event['bedrooms']?> Bedroom, <?=$event['bathrooms']?> Bath</p>
                                             <h6 class="teal-text">description</h6>
                                             <p style="margin: 0" class="blue-grey-text"><?=$event['description']?></p>

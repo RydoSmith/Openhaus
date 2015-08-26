@@ -33,12 +33,11 @@
             <div class="row">
                 <div class="col s9 m9 l9">
                     <div class="row">
-                        <div class="col s4 m4 l4">
-                            <div style="width: 100px; padding: 10px; margin-left: 40px;">
+                        <div class="col s5 m5 l5">
+                            <div style="width: 150px; padding: 10px; margin-left: 40px;">
                                 <img src="/public/img/default-avatar.png" alt="" class="circle responsive-img">
-                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['first_name']); ?></p>
-                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['last_name']); ?></p>
-                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['bio']); ?></p>
+                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['first_name']); ?> <?= ucfirst($model->event['user']['last_name']); ?></p>
+                                <p style="text-align:center; margin: 0; color: #696969; font-size: 16px;"><?= ucfirst($model->event['user']['bio']); ?>Bio will go here, interface is coming!</p>
                             </div>
                         </div>
                         <div class="col s2 m2 l2">
@@ -49,7 +48,7 @@
                             <p style="text-align:center; margin: 30px 0 0 0; font-size: 32px; color: #696969;"><?=$model->event['bedrooms'];?></p>
                             <p style="text-align:center; margin: 0; color: #696969;">bedroom</p>
                         </div>
-                        <div class="col s2 m2 l2">
+                        <div class="col s1 m1 l1">
                             <p style="text-align:center; margin: 30px 0 0 0; font-size: 32px; color: #696969;"><?=$model->event['bathrooms'];?></p>
                             <p style="text-align:center; margin: 0; color: #696969;">bathroom</p>
                         </div>
@@ -63,7 +62,7 @@
                     <h5 class="grey-text" style="margin: 20px 0">Photos</h5>
                     <div class="row">
                         <?php foreach($model->event['images'] as $image): ?>
-                            <div class="col s4 m4 l4" style="min-width: 320px; margin-bottom: 15px;">
+                            <div class="col s4 m4 l4" style="min-width: 320px; height: 200px; margin-bottom: 15px;">
                                 <img src="<?= $image['href']; ?>" alt="" class="materialboxed" width="300">
                             </div>
                         <?php endforeach; ?>
@@ -73,20 +72,23 @@
                     <hr style="border-style: dashed; background-color: #fff; margin: 50px 0; border-color: #cdcdcd">
 
                     <h5 class="grey-text" style="margin: 20px 0">Who's going?</h5>
-                    <div class="rsvp-users">
-                        <?php if(count($model->event['rsvps']) > 0): ?>
+                    <div class="row">
+                        <div class="rsvp-users col s2 m2 l2">
+                            <?php if(count($model->event['rsvps']) > 0): ?>
 
-                            <?php foreach($model->event['rsvps'] as $rsvp): ?>
-                                <?= ucfirst($rsvp['user']['first_name']).' '.ucfirst($rsvp['user']['last_name']) ?>
-                            <?php endforeach; ?>
+                                <?php foreach($model->event['rsvps'] as $rsvp): ?>
+                                    <img src="<?= $rsvp['user']['image']['href'];  ?>" style="margin-left: 10px; width: 70px; margin-top: 15px" alt="" class="circle responsive-img" />
+                                    <p style="font-size: 18px"><?= ucfirst($rsvp['user']['first_name']).' '.ucfirst($rsvp['user']['last_name']) ?> </p>
+                                <?php endforeach; ?>
 
-                        <?php else: ?>
+                            <?php else: ?>
 
-                            <p>There are no RSVP's to this event, <a href="#!" class="rsvpmodal-launch teal-text">be the first</a>!</p>
+                                <p class="rsvp-message">There are no RSVP's to this event, <a href="#!" class="rsvpmodal-launch teal-text not-auth-btn">be the first</a>!</p>
 
-                        <?php endif; ?>
+                            <?php endif; ?>
+
+                        </div>
                     </div>
-
                     <hr style="border-style: dashed; background-color: #fff; margin: 50px 0; border-color: #cdcdcd">
 
                     <div class="row">
@@ -111,7 +113,7 @@
                                         <input type="text" name="comment" class="materialize-textarea" placeholder="leave a comment">
                                     </div>
                                     <div class="input-field col s2">
-                                        <input type="submit" class="btn teal" value="comment">
+                                        <input type="submit" class="btn teal not-auth-btn" value="comment">
                                     </div>
                                 <?php else: ?>
                                     <div class="col s12">
@@ -123,7 +125,7 @@
                     </div>
                 </div>
                 <div class="col s13 m3 l3">
-                    <a href="#!" class="btn waves-effect waves-light btn teal rsvpmodal-launch" style="width: 100%; margin-bottom: 10px;">RSVP to Attend</a>
+                    <a href="#!" class="btn waves-effect waves-light btn teal rsvpmodal-launch not-auth-btn" style="width: 100%; margin-bottom: 10px;">RSVP to Attend</a>
                     <div id="rsvpmodal" class="modal" style="width: 500px;">
                         <div class="modal-content" style="height: 300px;">
                             <h4>RSVP to Event</h4>
@@ -143,8 +145,8 @@
                             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">cancel</a>
                         </div>
                     </div>
-                    <a href="#!" class="btn waves-effect waves-light btn teal" style="width: 100%; margin-bottom: 10px;">Share with a Friend</a>
-                    <a href="#!" class="btn waves-effect waves-light btn teal" style="width: 100%; margin-bottom: 10px;" id="watchlist-btn">Add to Watchlist</a>
+                    <a href="#!" class="btn waves-effect waves-light btn teal" style="width: 100%; margin-bottom: 10px;" id="share-btn">Share with a Friend</a>
+                    <a href="#!" class="btn waves-effect waves-light btn teal not-auth-btn" style="width: 100%; margin-bottom: 10px;" id="watchlist-btn">Add to Watchlist</a>
                 </div>
             </div>
         </div>
@@ -161,56 +163,74 @@
             controlNav: false
         });
 
+        $('#share-btn').click(function(){
+            Materialize.toast('Feature coming, be patient :)', 4000);
+        })
 
-
-        $('.rsvpmodal-launch').click(function(){
-            $('#rsvpmodal').openModal();
-        });
-
-        $('#rsvp-btn').click(function(){
-
-            var eventDateId = $(this).attr('data-event-date-id');
-            $('#rsvpmodal').closeModal();
-
-            $.ajax({
-                type: "POST",
-                url: '/event/rsvp',
-                data: eventDateId,
-                success: function(data, message)
-                {
-                    $('#rsvp-message').html('');
-                    if(data.json == "success")
-                    {
-                        Materialize.toast('Your RSVP to this event has been sent to the organizer', 4000);
-                    }
-                    else
-                    {
-                        Materialize.toast('You have already send this organizer an RSVP for that date', 4000);
-                    }
-                },
-                dataType: "JSON"
+        <?php if(isset($model->account)): ?>
+            $('.rsvpmodal-launch').click(function(){
+                $('#rsvpmodal').openModal();
             });
-        });
 
-        $('.rsvp-option').click(function(){
-            var eventDateId = $(this).attr('data-event-date-id');
-            $('#rsvp-message').html('You have selected <span class="teal-text">' + $(this).attr('data-event-date-time') + '</span>. Click RSVP below to RSVP to this event.');
-            $('#rsvp-btn').attr('data-event-date-id', eventDateId);
-        });
+            $('#rsvp-btn').click(function(){
 
-        var isOnWatchlist = false;
+                var eventDateId = $(this).attr('data-event-date-id');
+                $('#rsvpmodal').closeModal();
 
-        $('#watchlist-btn').click(function(){
-            if(!isOnWatchlist)
-            {
-                Materialize.toast('Event added to watchlist!', 4000);
-                isOnWatchlist = true;
-            }
-            else
-            {
-                Materialize.toast('You already have this event on your watchlist!', 4000);
-            }
-        });
+                $.ajax({
+                    type: "POST",
+                    url: '/event/rsvp',
+                    data: eventDateId,
+                    success: function(data, message)
+                    {
+                        $('#rsvp-message').html('');
+                        if(data.json == "success")
+                        {
+                            Materialize.toast('Your RSVP to this event has been sent to the organizer', 4000);
+                            if($('.rsvp-message'))
+                            {
+                                $('.rsvp-message').remove();
+                            }
+                            $('.rsvp-users').prepend("<img src=\"<?= $model->account->image;  ?>\" style=\"margin-left: 10px; width: 70px; margin-top: 15px\" alt=\"\" class=\"circle responsive-img\" /><p style=\"font-size: 18px\"><?= ucfirst($model->account->first_name).' '.ucfirst($model->account->last_name) ?> </p>");
+                        }
+                        else
+                        {
+                            Materialize.toast('You have already send this organizer an RSVP for that date', 4000);
+                        }
+                    },
+                    dataType: "JSON"
+                });
+            });
+
+            $('.rsvp-option').click(function(){
+                var eventDateId = $(this).attr('data-event-date-id');
+                $('#rsvp-message').html('You have selected <span class="teal-text">' + $(this).attr('data-event-date-time') + '</span>. Click RSVP below to RSVP to this event.');
+                $('#rsvp-btn').attr('data-event-date-id', eventDateId);
+            });
+
+            var isOnWatchlist = false;
+
+            $('#watchlist-btn').click(function(){
+                if(!isOnWatchlist)
+                {
+                    Materialize.toast('Event added to watchlist!', 4000);
+                    isOnWatchlist = true;
+                }
+                else
+                {
+                    Materialize.toast('You already have this event on your watchlist!', 4000);
+                }
+            });
+        <?php else : ?>
+
+            $('.not-auth-btn').click(function(){
+                Materialize.toast('You must be logged in to perform this action. Either <a href="/account/login">&nbsp; login &nbsp; </a> or <a href="/account/signup">&nbsp; sign up</a>!', 4000);
+            });
+
+        <?php endif; ?>
+
+
+
     });
 
     //

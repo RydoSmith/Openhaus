@@ -30,7 +30,7 @@ class Event extends BaseController
                 exit();
             }
 
-            $this->Redirect('home');
+            $this->Redirect('event', 'detail', $model->view->post['id']);
         }
         else
         {
@@ -44,20 +44,19 @@ class Event extends BaseController
     //Search
     protected function Search()
     {
+
+        //Get variables from string
+        $queryVarString  = explode("&", explode("?", $_SERVER['REQUEST_URI'])[1] );
+        $vars = array();
+        foreach($queryVarString as $qvs)
+        {
+            array_push($vars, preg_split('/=/', $qvs));
+        }
+
         //Check if post
-        if(CHelper::IsPost())
-        {
-            $model = new EventModel("Search", true);
-            $model->setPageTitle('Search');
-            $this->ReturnView($model->view);
-        }
-        else
-        {
-            //get
-            //is not post, cannot contain post variables,
-            //redirect to home
-            $this->Redirect('home');
-        }
+        $model = new EventModel("Search", false, $vars);
+        $model->setPageTitle('Search');
+        $this->ReturnView($model->view);
     }
 
     //Image upload, event specific

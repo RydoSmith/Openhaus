@@ -41,7 +41,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <a href="#" class="waves-effect waves-light btn white-text next-btn btn-large">Next</a>
+
+                            <a href="#" class="waves-effect waves-light btn white-text next-btn btn-large validation-btn">Next</a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -78,7 +79,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <a href="#" class="waves-effect waves-light btn white-text next-btn btn-large">Next</a>
+                            <a href="#" class="waves-effect waves-light btn white-text prev-btn grey btn-large">Back</a>
+                            <a href="#" class="waves-effect waves-light btn white-text next-btn btn-large validation-btn">Next</a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -198,7 +200,8 @@
                     <div class="row">
                         <div class="col">
                             <div id="img-guids"></div>
-                            <a href="#" class="waves-effect waves-light btn white-text next-btn">Next</a>
+                            <a href="#" class="waves-effect waves-light btn white-text prev-btn grey btn-large">Back</a>
+                            <a href="#" class="waves-effect waves-light btn white-text next-btn btn-large validation-btn">Next</a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -223,13 +226,13 @@
                     <div class="row">
                         <div class="col s8 m8 l8">
                             <h5 class="grey-text">Event Name</h5>
-                            <input placeholder="Name your event" type="text"  name="event_name" id="event_name">
+                            <input placeholder="Name your event" type="text"  name="name" id="event_name">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s8 m8 l8">
                             <h5 class="grey-text">Event Description</h5>
-                            <textarea id="event_description" class="materialize-textarea" placeholder="Describe what makes your open house unique" name="event_description"></textarea>
+                            <textarea id="event_description" class="materialize-textarea" placeholder="Describe what makes your open house unique" name="description"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -251,7 +254,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <button type="button" id="submit-btn" class="waves-effect waves-light btn teal white-text">Finish</button>
+                            <a href="#" class="waves-effect waves-light btn white-text grey prev-btn btn-large">Back</a>
+                            <button type="button" class="waves-effect waves-light btn teal white-text btn-large validation-btn">Finish</button>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -268,26 +272,21 @@
         //Initialize controls
         $('select').material_select();
 
-        //
-        //Validation
-        //
-        var dateSet = false;
 
-        function addButtonValidation(message)
-        {
-            $('.next-btn').addClass('tooltipped');
-            $('.next-btn').attr('data-position', 'right');
-            $('.next-btn').attr('data-delay', '10');
-            $('.next-btn').attr('data-tooltip', message);
-        }
+        Number.prototype.formatMoney = function(c, d, t){
+            var n = this,
+                c = isNaN(c = Math.abs(c)) ? 2 : c,
+                d = d == undefined ? "." : d,
+                t = t == undefined ? "," : t,
+                s = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
 
-        function removeButtonValidation()
-        {
-            $('.next-btn').removeClass('tooltipped');
-            $('.next-btn').removeAttr('data-position');
-            $('.next-btn').removeAttr('data-delay');
-            $('.next-btn').removeAttr('data-tooltip');
-        }
+        $('#price').focusout(function(){
+            $(this).val(parseFloat($(this).val()).formatMoney('2', '.', ','));
+        });
 
 
 
@@ -300,6 +299,7 @@
         $('.timepicker-end').hide();
 
 
+        var dateSet = false;
         var newDate = {}; //used when adding a date object
         var selectedDates = []; //stores the added dates
 
@@ -317,6 +317,7 @@
             today: null,
             clear: null,
             close: null,
+            min: new Date(),
             onClose: function()
             {
                 if(isSelectingDate)
@@ -346,7 +347,6 @@
                 this.open()
             }
         });
-
         startTimePicker = $('.timepicker-start').pickatime({
             today: null,
             clear: null,
@@ -377,7 +377,6 @@
                 }
             }
         });
-
         endTimePicker = $('.timepicker-end').pickatime({
             today: null,
             clear: null,
@@ -461,16 +460,64 @@
 
         var selectedPage = 1;
 
-        $('.next-btn').click(function(){
+        function pageForward()
+        {
+            selectedPage++;
 
-            //
-            //Page validation
-            //
+            hidePages();
+            showPage();
+
+            //If users has navigation to the second page (with the map)
+            //then try to geolocate and render map to users location
+            if(selectedPage == 2 && !$('#address').val())
+            {
+                if ("geolocation" in navigator) {
+                    /* geolocation is available */
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        $('#address').geocomplete("find", position.coords.latitude + ", " + position.coords.longitude);
+                        google.maps.event.trigger(document.getElementById('map'), 'resize');
+                    });
+                } else {
+                    /* geolocation IS NOT available */
+                    $('#address').trigger("geocode");
+                }
+            }
+        }
+
+        $('.prev-btn').click(function(){
+            selectedPage--;
+            hidePages();
+            showPage();
+        });
+
+        function hidePages()
+        {
+            $('#page-1').hide();
+            $('#page-2').hide();
+            $('#page-3').hide();
+            $('#page-4').hide();
+        }
+
+        function showPage()
+        {
+            $('#page-'+selectedPage).show();
+        }
+        //end multi-step page
+
+        //
+        //Validation
+        //
+        $('.validation-btn').click(function(){
             if(selectedPage == 1)
             {
                 if(!dateSet)
                 {
                     Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please select a date!', 4000);
+                    return;
+                }
+                else
+                {
+                    pageForward();
                     return;
                 }
             }
@@ -479,6 +526,11 @@
                 if(!$('#address').val())
                 {
                     Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter an address', 4000);
+                    return;
+                }
+                else
+                {
+                    pageForward();
                     return;
                 }
             }
@@ -504,56 +556,25 @@
                     isInvalid = true;
                 }
 
-                if(isInvalid){ return; }
+                if(isInvalid){ return; }else{ pageForward(); return; }
             }
-
-            //
-            //End Page Validation
-            //
-
-
-            selectedPage++;
-
-            hidePages();
-            showPage();
-
-            //If users has navigation to the second page (with the map)
-            //then try to geolocate and render map to users location
-            if(selectedPage == 2)
+            if(selectedPage == 4)
             {
-                if ("geolocation" in navigator) {
-                    /* geolocation is available */
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        $('#address').geocomplete("find", position.coords.latitude + ", " + position.coords.longitude);
-                        google.maps.event.trigger(document.getElementById('map'), 'resize');
-                    });
-                } else {
-                    /* geolocation IS NOT available */
-                    $('#address').trigger("geocode");
+                var isInvalid = false;
+                if(!$('#event_name').val())
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter an event name', 4000);
+                    isInvalid = true;
                 }
+                if(!$('#event_description').val())
+                {
+                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter a description of your event', 4000);
+                    isInvalid = true;
+                }
+
+                if(isInvalid){ return; }else{ $('#event_form').submit(); return; }
             }
         });
-
-        $('.prev-btn').click(function(){
-            selectedPage--;
-            hidePages();
-            showPage();
-        });
-
-        function hidePages()
-        {
-            $('#page-1').hide();
-            $('#page-2').hide();
-            $('#page-3').hide();
-            $('#page-4').hide();
-        }
-
-        function showPage()
-        {
-            $('#page-'+selectedPage).show();
-        }
-        //end multi-step page
-
 
         //
         //Google map autocomplete
@@ -632,24 +653,6 @@
 
         //End image upload
 
-
-        $('#submit-btn').click(function(){
-            if(selectedPage == 4)
-            {
-                if(!$('#event_name').val())
-                {
-                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter an event name', 4000);
-                    return;
-                }
-                if(!$('#event_description').val())
-                {
-                    Materialize.toast('<i class="material-icons white-text" style="margin-right: 10px; width: 24px; overflow: hidden;">error_outline</i> Please enter a description of your event', 4000);
-                    return;
-                }
-            }
-
-            $('#event_form').submit();
-        });
 
     });
 </script>
