@@ -22,11 +22,17 @@
     require_once 'models/accountmodel.php';
     require_once 'models/eventmodel.php';
 
+    //Remove from live
+    require_once 'models/gmodel.php';
+
     //Require controllers
     require_once 'controllers/error.php';
     require_once 'controllers/home.php';
     require_once 'controllers/account.php';
     require_once 'controllers/event.php';
+
+    //Remove from live
+    require_once 'controllers/g.php';
 
     //create controllers and execute the action
     $loader = new Loader($_GET);

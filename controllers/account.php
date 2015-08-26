@@ -45,57 +45,33 @@ class Account extends BaseController
     }
 
     /* VERIFY */
-    protected function Verify($v, $e)
+    protected function Verify($v = null, $e = null)
     {
-        $model = new AccountModel("Verify", false, $this->urlParams);
-        $model->setPageTitle("Account Verified");
-        $this->ReturnView($model->view);
-    }
-
-    /* COMPLETE SIGN UP */
-    protected function Complete()
-    {
-        $params = array
-        (
-            'id'    =>  $_POST['id'],
-            'email' =>  $_POST['email'],
-            'username' => $_POST['username'],
-            'password'  =>  $_POST['password'],
-            'confirm_password' => $_POST['confirm_password'],
-            'first_name'  =>  $_POST['first_name'],
-            'last_name'  =>  $_POST['last_name'],
-            'country_id'  =>  $_POST['country_id'],
-            'city'  =>  $_POST['city']
-
-        );
-
-        $model = new AccountModel("Complete", true, $params);
-
-        //Error checking
-        if($model->hasError())
+        if(!$_POST)
         {
-            //Model has errors, add params to model to repopulate form
-            $model->view->id = $params['id'];
-            $model->view->email = isset($params['email']) ? $params['email'] : null;
-            $model->view->username = isset($params['username']) ? $params['username'] : null;
-            $model->view->first_name = isset($params['first_name']) ? $params['first_name'] : null;
-            $model->view->last_name = isset($params['last_name']) ? $params['last_name'] : null;
-            $model->view->country_id = isset($params['country_id']) ? $params['country_id'] : null;
-            $model->view->city = isset($params['city']) ? $params['city'] : null;
-
+            $model = new AccountModel("Verify", false, $this->urlParams);
             $model->setPageTitle("Account Verified");
-            $this->ReturnViewByName('verify', $model->view);
-            exit();
+            $this->ReturnView($model->view);
+        }
+        else
+        {
+            $model = new AccountModel("Verify", true);
+
+            //Error checking
+            if($model->hasError())
+            {
+                $model->setPageTitle("Account Verified");
+                $this->ReturnViewByName('verify', $model->view);
+                exit();
+            }
+
+            //Verified and completed, log the user in
+            $_SESSION['Username'] = $_POST['email'];
+            $_SESSION['LoggedIn'] = 1;
+
+            $this->Redirect('home');
         }
 
-        $model->setPageTitle("Complete Registration");
-
-        //Login
-        $_SESSION['Username'] = $_POST['email'];
-        $_SESSION['LoggedIn'] = 1;
-
-        //ACCOUNT COMPLETION: Redirect to home
-        $this->Redirect('home');
     }
 
     /* LOGIN */

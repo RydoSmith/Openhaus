@@ -31,10 +31,31 @@
             <h4 class="grey-text" style="margin: 0"><?=$model->event['name'];?></h4>
 
             <div class="row">
-                <div class="col s12 m10 l10">
-                    <p>Organiser image, name & bio + type, bedrooms & bathrooms go here</p>
+                <div class="col s9 m9 l9">
+                    <div class="row">
+                        <div class="col s4 m4 l4">
+                            <div style="width: 100px; padding: 10px; margin-left: 40px;">
+                                <img src="/public/img/default-avatar.png" alt="" class="circle responsive-img">
+                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['first_name']); ?></p>
+                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['last_name']); ?></p>
+                                <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['bio']); ?></p>
+                            </div>
+                        </div>
+                        <div class="col s2 m2 l2">
+                            <p style="text-align:center; margin: 30px 0 0 0; font-size: 32px; color: #696969;"><?=$model->event['type'];?></p>
+                            <p style="text-align:center; margin: 0; color: #696969;">property type</p>
+                        </div>
+                        <div class="col s2 m2 l2">
+                            <p style="text-align:center; margin: 30px 0 0 0; font-size: 32px; color: #696969;"><?=$model->event['bedrooms'];?></p>
+                            <p style="text-align:center; margin: 0; color: #696969;">bedroom</p>
+                        </div>
+                        <div class="col s2 m2 l2">
+                            <p style="text-align:center; margin: 30px 0 0 0; font-size: 32px; color: #696969;"><?=$model->event['bathrooms'];?></p>
+                            <p style="text-align:center; margin: 0; color: #696969;">bathroom</p>
+                        </div>
+                    </div>
 
-                    <h5 class="grey-text" style="margin: 20px 0;">About this Open House</h5>
+                    <h5 class="grey-text" style="margin: 60px 0 20px 0;">About this Open House</h5>
                     <p class="grey-text" style="margin: 0"><?=$model->event['description'];?></p>
 
                     <hr style="border-style: dashed; background-color: #fff; margin: 50px 0; border-color: #cdcdcd">
@@ -42,10 +63,8 @@
                     <h5 class="grey-text" style="margin: 20px 0">Photos</h5>
                     <div class="row">
                         <?php foreach($model->event['images'] as $image): ?>
-                            <div class="col s6 m6 l6">
-                                <div style="width: 100%; overflow: hidden; height: 200px; margin-bottom: 20px;">
-                                    <img src="<?= $image['href']; ?>" alt="" style="width: 100%">
-                                </div>
+                            <div class="col s4 m4 l4" style="min-width: 320px; margin-bottom: 15px;">
+                                <img src="<?= $image['href']; ?>" alt="" class="materialboxed" width="300">
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -54,7 +73,19 @@
                     <hr style="border-style: dashed; background-color: #fff; margin: 50px 0; border-color: #cdcdcd">
 
                     <h5 class="grey-text" style="margin: 20px 0">Who's going?</h5>
-                    <p>list of rsvp users goes here</p>
+                    <div class="rsvp-users">
+                        <?php if(count($model->event['rsvps']) > 0): ?>
+
+                            <?php foreach($model->event['rsvps'] as $rsvp): ?>
+                                <?= ucfirst($rsvp['user']['first_name']).' '.ucfirst($rsvp['user']['last_name']) ?>
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <p>There are no RSVP's to this event, <a href="#!" class="rsvpmodal-launch teal-text">be the first</a>!</p>
+
+                        <?php endif; ?>
+                    </div>
 
                     <hr style="border-style: dashed; background-color: #fff; margin: 50px 0; border-color: #cdcdcd">
 
@@ -91,13 +122,31 @@
                         </form>
                     </div>
                 </div>
-                <div class="col s12 m2 l2">
-                    <p>rsvp</p>
-                    <p>share</p>
-                    <p>add to watchlist</p>
+                <div class="col s13 m3 l3">
+                    <a href="#!" class="btn waves-effect waves-light btn teal rsvpmodal-launch" style="width: 100%; margin-bottom: 10px;">RSVP to Attend</a>
+                    <div id="rsvpmodal" class="modal" style="width: 500px;">
+                        <div class="modal-content" style="height: 300px;">
+                            <h4>RSVP to Event</h4>
+                            <!-- Dropdown Trigger -->
+                            <a class='dropdown-button btn' href='#' data-activates='rsvp-dropdown'>Choose a Date</a>
+
+                            <!-- Dropdown Structure -->
+                            <ul id='rsvp-dropdown' class='dropdown-content' style="min-width: 300px !important;">
+                                <?php foreach($model->event['dates'] as $date): ?>
+                                    <li style="padding: 20px; width: 300px;" class="rsvp-option" data-event-date-time="<?= date("D, M jS", strtotime($date['date']));?> &nbsp; <?= date("g A", strtotime($date['start_time']));?>-<?= date("g A", strtotime($date['end_time']));?>" data-event-date-id="<?=$date['id'];?>"><?= date("D, M jS", strtotime($date['date']));?> &nbsp; <?= date("g A", strtotime($date['start_time']));?>-<?= date("g A", strtotime($date['end_time']));?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <p id="rsvp-message" style="padding: 0 10px 0 10px"></p>
+                            <a href="#!" class=" modal-action waves-effect waves-green btn-flat" id="rsvp-btn">rsvp</a>
+                            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">cancel</a>
+                        </div>
+                    </div>
+                    <a href="#!" class="btn waves-effect waves-light btn teal" style="width: 100%; margin-bottom: 10px;">Share with a Friend</a>
+                    <a href="#!" class="btn waves-effect waves-light btn teal" style="width: 100%; margin-bottom: 10px;" id="watchlist-btn">Add to Watchlist</a>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -105,6 +154,7 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script src="/public/plugins/nivo/jquery.nivo.slider.js"></script>
 <script type="text/javascript">
+
     $(window).load(function() {
         $('#slider').nivoSlider({
             effect: 'fade',
@@ -113,10 +163,59 @@
 
 
 
+        $('.rsvpmodal-launch').click(function(){
+            $('#rsvpmodal').openModal();
+        });
 
+        $('#rsvp-btn').click(function(){
 
+            var eventDateId = $(this).attr('data-event-date-id');
+            $('#rsvpmodal').closeModal();
+
+            $.ajax({
+                type: "POST",
+                url: '/event/rsvp',
+                data: eventDateId,
+                success: function(data, message)
+                {
+                    $('#rsvp-message').html('');
+                    if(data.json == "success")
+                    {
+                        Materialize.toast('Your RSVP to this event has been sent to the organizer', 4000);
+                    }
+                    else
+                    {
+                        Materialize.toast('You have already send this organizer an RSVP for that date', 4000);
+                    }
+                },
+                dataType: "JSON"
+            });
+        });
+
+        $('.rsvp-option').click(function(){
+            var eventDateId = $(this).attr('data-event-date-id');
+            $('#rsvp-message').html('You have selected <span class="teal-text">' + $(this).attr('data-event-date-time') + '</span>. Click RSVP below to RSVP to this event.');
+            $('#rsvp-btn').attr('data-event-date-id', eventDateId);
+        });
+
+        var isOnWatchlist = false;
+
+        $('#watchlist-btn').click(function(){
+            if(!isOnWatchlist)
+            {
+                Materialize.toast('Event added to watchlist!', 4000);
+                isOnWatchlist = true;
+            }
+            else
+            {
+                Materialize.toast('You already have this event on your watchlist!', 4000);
+            }
+        });
     });
 
+    //
+    //Map
+    //
     var address = "<?=$model->event['location']?>";
     var geocoder = new google.maps.Geocoder();
     function initialize() {

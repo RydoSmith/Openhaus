@@ -91,21 +91,16 @@ class Event extends BaseController
     {
         $model = new EventModel("Detail", false, array($id));
 
+        //echo '<pre>'; print_r($model->view->event); exit();
+
         $model->setPageTitle($model->view->event['name']);
         $this->ReturnView($model->view);
     }
 
-
-
-
-
-    //IMPORTANT - REMOVE WHEN LIVE
-    //Sample
-    //IMPORTANT - REMOVE WHEN LIVE
-    public function GenerateSampleData()
+    //RSVP
+    public function RSVP()
     {
-        $model = new EventModel("GenerateSampleData", false);
-        echo "Sample Data Generated";
-        exit();
+        $eventDateId = json_decode(file_get_contents('php://input'), true);
+        $model = new EventModel("RSVP", true, array($eventDateId));
     }
 }

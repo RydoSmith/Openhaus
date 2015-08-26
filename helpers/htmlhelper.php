@@ -11,15 +11,39 @@ class HTMLHelper
     {
         if(isset($m) && isset($m->modelErrors[$field]))
         {
-            echo '<p class="red-text" style="margin: 5px 0;">'.$m->modelErrors[$field]->message.'</p>';
+            echo '<p class="red-text" style="margin: 2px 0; text-align: right">'.$m->modelErrors[$field]->message.'</p>';
+        }
+    }
+
+    public function FieldHasError($m, $field)
+    {
+        if(isset($m) && isset($m->modelErrors[$field]))
+        {
+            return 'has-error';
+        }
+    }
+
+    public function IsSelected($field, $value)
+    {
+        if($field == $value)
+        {
+            echo "selected=\"selected\"";
         }
     }
 
     public function DisplayValueFor($m, $field)
     {
-        if(isset($m) && isset($m->$field) && $m->$field != null)
+        if(isset($m) && isset($m->post) && isset($m->post[$field]) && $m->post[$field] != null)
         {
-            echo 'value="'.$m->$field.'"';
+            echo 'value="'.$m->post[$field].'"';
+        }
+    }
+
+    public function DisplayTextareaValueFor($m, $field)
+    {
+        if(isset($m) && isset($m->post) && isset($m->post[$field]) && $m->post[$field] != null)
+        {
+            echo $m->post[$field];
         }
     }
 

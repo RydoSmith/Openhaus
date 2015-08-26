@@ -8,8 +8,12 @@ class Email extends PHPMailer
     {
         $this->isSMTP();
         $this->SMTPAuth = true;
-        $this->Port = 587;
 
+        if($config['smtp_secure'])
+        {
+            $this->SMTPSecure = $config['smtp_secure'];
+        }
+        $this->Port = $config['smtp_port'];
         $this->Host = $config['smtp_host'];
         $this->Username = $config['smtp_user'];
         $this->Password = $config['smtp_password'];

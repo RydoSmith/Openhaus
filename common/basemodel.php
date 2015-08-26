@@ -178,6 +178,36 @@ abstract class BaseModel
             $event['dates'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        //Gets rsvps
+        $event['rsvps'] = array();
+        foreach($event['dates'] as $date)
+        {
+            $sql = "SELECT * FROM event_rsvps WHERE event_date_id=:date_id";
+            if($stmt = $this->database->prepare($sql))
+            {
+                $stmt->bindParam(':date_id', $date['id'], PDO::PARAM_STR);
+                $stmt->execute();
+                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach($row as $r)
+                {
+                    if($r)
+                    {
+                        $r['user'] = array();
+                        $sql = "SELECT id, first_name, last_name FROM users WHERE id=:user_id";
+                        if($stmt = $this->database->prepare($sql))
+                        {
+                            $stmt->bindParam(':user_id', $r['user_id'], PDO::PARAM_STR);
+                            $stmt->execute();
+                            $r['user'] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        }
+                        array_push($event['rsvps'] , $r);
+                    }
+                }
+            }
+        }
+
         //Get Event Keywords
         $sql = "SELECT * FROM event_keywords WHERE event_id=:eid";
         if($stmt = $this->database->prepare($sql))
