@@ -21,6 +21,7 @@
     require_once 'models/errormodel.php';
     require_once 'models/accountmodel.php';
     require_once 'models/eventmodel.php';
+    require_once 'models/usermodel.php';
 
     //Remove from live
     require_once 'models/gmodel.php';
@@ -30,6 +31,7 @@
     require_once 'controllers/home.php';
     require_once 'controllers/account.php';
     require_once 'controllers/event.php';
+    require_once 'controllers/user.php';
 
     //Remove from live
     require_once 'controllers/g.php';

@@ -250,3 +250,38 @@ body{ overflow-y: scroll !important; }
     background-repeat:   no-repeat;
     background-size:     cover;"
 }
+
+
+/* Dashboard & User */
+ul.user-nav
+{
+
+}
+
+ul.user-nav li
+{
+    margin: 0;
+    display: inline-block;
+}
+
+ul.user-nav li a
+{
+    margin: 0;
+    padding: 20px;
+    border-bottom: 3px solid #efefef;
+    color: #1AA194;
+    font-size: 18px;
+    margin-left: -4px;
+}
+
+ul.user-nav li a:hover
+{
+    border-color: #1AA194;
+}
+
+ul.user-nav li a.selected
+{
+    border-color: #1AA194;
+}
+
+

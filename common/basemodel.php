@@ -228,7 +228,7 @@ abstract class BaseModel
         $event['rsvps'] = array();
         foreach($event['dates'] as $date)
         {
-            $sql = "SELECT * FROM event_rsvps WHERE event_date_id=:date_id";
+            $sql = "SELECT user_id FROM event_rsvps WHERE event_date_id=:date_id";
             if($stmt = $this->database->prepare($sql))
             {
                 $stmt->bindParam(':date_id', $date['id'], PDO::PARAM_STR);
@@ -263,6 +263,7 @@ abstract class BaseModel
                 }
             }
         }
+        $event['rsvps'] = array_unique($event['rsvps'], SORT_REGULAR);
 
         //Get Event Keywords
         $sql = "SELECT * FROM event_keywords WHERE event_id=:eid";

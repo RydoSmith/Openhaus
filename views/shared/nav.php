@@ -5,7 +5,7 @@
 
                 <a href="/event/create" class="waves-effect waves-light btn pink btn-nav">CREATE EVENT</a>
                 <div style="padding-top: 12px; float: right; margin-left: 10px">
-                    <span style="display: inline-block; padding: 0; margin: 0; margin-top: -20px; line-height: 20px;">Hi, <?= $model->account->first_name; ?>!
+                    <span style="display: inline-block; padding: 0; margin: 0; margin-top: -20px; line-height: 20px;">Hi, <?= ucfirst($model->account->first_name); ?>!
                     <br>
                         <a href="/account/logout" style="padding: 0; font-size: 12px">LOGOUT</a>
                     </span>
