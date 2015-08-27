@@ -6,10 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0a5823f-6f52-4fce-aeb2-45b6813b1090" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/basemodel.php" afterPath="$PROJECT_DIR$/common/basemodel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/shared/nav.php" afterPath="$PROJECT_DIR$/views/shared/nav.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/config.php" afterPath="$PROJECT_DIR$/conf/config.php" />
     </list>
     <ignored path="Openhaus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,6 +41,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="config.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/conf/config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7022792" vertical-offset="0" max-vertical-offset="702">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="32" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="usermodel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/usermodel.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -56,10 +63,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dashboard.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/user/dashboard.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33903134" vertical-offset="0" max-vertical-offset="702">
+            <state vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="442">
               <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
@@ -127,7 +134,6 @@
         <option value="$PROJECT_DIR$/views/home/index.php" />
         <option value="$PROJECT_DIR$/common/email.php" />
         <option value="$PROJECT_DIR$/views/event/search.php" />
-        <option value="$PROJECT_DIR$/conf/config.php" />
         <option value="$PROJECT_DIR$/controllers/account.php" />
         <option value="$PROJECT_DIR$/views/event/create.php" />
         <option value="$PROJECT_DIR$/models/accountmodel.php" />
@@ -142,6 +148,7 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
         <option value="$PROJECT_DIR$/views/user/dashboard.php" />
+        <option value="$PROJECT_DIR$/conf/config.php" />
       </list>
     </option>
   </component>
@@ -302,6 +309,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Openhaus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Openhaus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="conf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -647,14 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.384615" vertical-offset="0" max-vertical-offset="680">
-          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/email.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="680">
@@ -924,11 +937,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/user/dashboard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33903134" vertical-offset="0" max-vertical-offset="702">
+        <state vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="442">
           <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7022792" vertical-offset="0" max-vertical-offset="702">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="32" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
