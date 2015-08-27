@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col s5 m5 l5">
                             <div style="width: 150px; padding: 10px; margin-left: 40px;">
-                                <img src="/public/img/default-avatar.png" alt="" class="circle responsive-img">
+                                <img src="<?= $model->account->image ?>" alt="" class="circle responsive-img" style="width: 100%">
                                 <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['first_name']); ?> <?= ucfirst($model->event['user']['last_name']); ?></p>
                                 <p style="text-align:center; margin: 0; color: #696969; font-size: 16px;"><?= ucfirst($model->event['user']['bio']); ?>Bio will go here, interface is coming!</p>
                             </div>
@@ -62,7 +62,7 @@
                     <h5 class="grey-text" style="margin: 20px 0">Photos</h5>
                     <div class="row">
                         <?php foreach($model->event['images'] as $image): ?>
-                            <div class="col s4 m4 l4" style="min-width: 320px; height: 200px; margin-bottom: 15px;">
+                            <div class="col s4 m4 l4 event-images-container">
                                 <img src="<?= $image['href']; ?>" alt="" class="materialboxed" width="300">
                             </div>
                         <?php endforeach; ?>

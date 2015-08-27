@@ -62,6 +62,35 @@ class Event extends BaseController
     //Image upload, event specific
     public function ImageUpload()
     {
+        //echo '<pre>'; print_r($_FILES); exit();
+
+        if(empty($_FILES['file']['name']))
+        {
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode("There was a problem with this image, try a different one!");
+            exit();
+        }
+
+        if(!empty($_FILES['file']['name']))
+        {
+            if($_FILES['file']['type'] != 'image/jpeg' && $_FILES['file']['type'] != 'image/png' && $_FILES['file']['type'] != 'image/pjpeg')
+            {
+                header('Content-Type: application/json');
+                http_response_code(400);
+                echo json_encode("Invalid file type, must be .jpg, .jpeg or .png");
+                exit();
+            }
+
+            if($_FILES['file']['size'] > 400000)
+            {
+                header('Content-Type: application/json');
+                http_response_code(400);
+                echo json_encode("Image too large, must be smaller than 4mb");
+                exit();
+            }
+        }
+
         //Create unique GUID
         $guid = CHelper::GetGUID();
 
@@ -70,7 +99,7 @@ class Event extends BaseController
         $storeFolder = '/var/www/public/app_data/event_images/';
 
         //If files are set
-        if (!empty($_FILES)) {
+        if (!empty($_FILES['file']['name'])) {
 
             $temp = explode(".", $_FILES["file"]["name"]);
             $newfilename = $guid . '.' . end($temp);

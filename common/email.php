@@ -9,7 +9,7 @@ class Email extends PHPMailer
         $this->isSMTP();
         $this->SMTPAuth = true;
 
-        if($config['smtp_secure'])
+        if(isset($config['smtp_secure']))
         {
             $this->SMTPSecure = $config['smtp_secure'];
         }

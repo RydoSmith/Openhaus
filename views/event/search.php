@@ -196,7 +196,7 @@
 
             $('.event-result').hide();
             $('.event-result').show();
-
+ry
             var date = $(this).attr('data-date');
             var eventResults = $('.event-result');
             for(var i=0; i < eventResults.length; i++)

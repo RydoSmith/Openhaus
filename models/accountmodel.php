@@ -198,7 +198,7 @@ class AccountModel extends BaseModel
         //Image
         if(!empty($_FILES['file']['name']))
         {
-            if($_FILES['file']['type'] != 'image/jpeg' && $_FILES['file']['type'] != 'image/png')
+            if($_FILES['file']['type'] != 'image/jpeg' && $_FILES['file']['type'] != 'image/png' && $_FILES['file']['type'] != 'image/pjpeg')
             {
                 $this->addModelError('image', new ModelError('Image must be a valid format, either .jpg or .png'));
             }
@@ -257,7 +257,7 @@ class AccountModel extends BaseModel
 
             //make new filename
             $temp = explode(".", $_FILES["file"]["name"]);
-            $newfilename = md5($this->view->post->id) . '.' . end($temp);
+            $newfilename = md5($this->view->post['email']) . '.' . end($temp);
 
             //Move image to user_images
             move_uploaded_file($_FILES["file"]["tmp_name"], $storeFolder . $newfilename);
@@ -268,7 +268,7 @@ class AccountModel extends BaseModel
             $storeFolder = '/var/www/public/app_data/user_images/';
 
             //make new filename
-            $newfilename = md5($this->view->post->id) . '.png';
+            $newfilename = md5($this->view->post['email']) . '.png';
 
             //Move image to user_images
             copy('/var/www/public/img/default-avatar.png', $storeFolder . $newfilename);

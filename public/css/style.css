@@ -157,9 +157,14 @@ ul.tag-display li
 }
 
 /* Image Upload */
-.dz-filename
+.dz-filename, .dz-error-mark, .dz-success-mark
 {
     display: none;
+}
+
+.dz-error-message
+{
+    color: #ff0004;
 }
 
 .image-upload
@@ -235,3 +240,13 @@ body{ overflow-y: scroll !important; }
   
 
 
+.event-images-container img
+{
+    position: relative;
+    float: left;
+    width:  300px;
+    height: 250px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;"
+}

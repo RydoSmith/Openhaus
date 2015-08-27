@@ -18,18 +18,18 @@ return array
     'email_support'  => 'support@openhaus.it',
 
     //Testing locally
-//    'smtp_host'  => 'smtp.gmail.com',
-//    'smtp_user'  => 'rydosmith2@gmail.com',
-//    'smtp_password'  => 'R160689s',
-//    'smtp_port'  => '465',
-//    'smtp_secure' => 'ssl' // secure transfer enabled REQUIRED for GMail
+    'smtp_host'  => 'smtp.gmail.com',
+    'smtp_user'  => 'rydosmith2@gmail.com',
+    'smtp_password'  => 'R160689s',
+    'smtp_port'  => '465',
+    'smtp_secure' => 'ssl' // secure transfer enabled REQUIRED for GMail
 
 
 
     //Test server
-    'smtp_host'  => 'smtp.postmarkapp.com',
-    'smtp_user'  => 'bfd19866-de79-4fce-a569-1b828feff203',
-    'smtp_password'  => 'bfd19866-de79-4fce-a569-1b828feff203',
-    'smtp_port' => '587'
+//    'smtp_host'  => 'smtp.postmarkapp.com',
+//    'smtp_user'  => 'bfd19866-de79-4fce-a569-1b828feff203',
+//    'smtp_password'  => 'bfd19866-de79-4fce-a569-1b828feff203',
+//    'smtp_port' => '587'
 
 );

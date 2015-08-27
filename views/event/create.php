@@ -191,6 +191,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
@@ -629,13 +630,15 @@
         //
         $(".image-upload").dropzone({
             url: '/event/imageupload',
-            'maxFiles': 1,
-            'autoProcessQueue': true,
-            'uploadMultiple': false,
-            'init': function()
+            maxFiles: 1,
+            autoProcessQueue: true,
+            uploadMultiple: false,
+            maxFileSize: 2,
+            init: function()
             {
                 this.on("addedfile", dropzoneFileAdded);
                 this.on("success", fileUploaded);
+                this.on("error", imageUploadError);
             }
         });
 
@@ -645,6 +648,17 @@
             $(p).children('a').hide();
             $(p).css('padding', '0');
         }
+
+        function imageUploadError(e, r)
+        {
+            var dz =  e.previewElement.parentElement;
+            e.previewElement.parentElement.dropzone.removeAllFiles();
+
+            $(dz).css('paddingTop', '70px');
+            $(dz).children().show();
+            Materialize.toast(r, 4000);
+        }
+
 
         function fileUploaded(obj, guid)
         {
