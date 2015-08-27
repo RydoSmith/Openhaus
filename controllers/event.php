@@ -119,6 +119,7 @@ class Event extends BaseController
     {
         $model = new EventModel("Detail", false, array($id));
 
+
         //echo '<pre>'; print_r($model->view->event); exit();
 
         $model->setPageTitle($model->view->event['name']);
@@ -130,5 +131,11 @@ class Event extends BaseController
     {
         $eventDateId = json_decode(file_get_contents('php://input'), true);
         $model = new EventModel("RSVP", true, array($eventDateId));
+    }
+
+    //Comment
+    public function Comment()
+    {
+        $model = new EventModel("Comment", true, $_POST);
     }
 }

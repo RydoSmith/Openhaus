@@ -377,4 +377,24 @@ class EventModel extends BaseModel
             exit();
         }
     }
+
+    //
+    //Comments
+    //
+    public function Comment_POST($event_id, $user_id, $comment)
+    {
+        parent::GetAccountInfo();
+
+        $sql = "INSERT INTO event_comments (event_id, user_id, content, created, updated) VALUES (:event_id, :user_id, :content, NOW(), NOW())";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+            $stmt->bindParam(':content', $comment, PDO::PARAM_STR);
+            $stmt->execute();
+
+            echo json_encode("success");
+            exit();
+        }
+    }
 }

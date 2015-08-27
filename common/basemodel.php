@@ -187,6 +187,43 @@ abstract class BaseModel
             $event['dates'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        //Get Comments
+        $event['comments'] = array();
+        $sql = "SELECT * FROM event_comments WHERE event_id=:event_id ORDER BY created DESC";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':event_id', $event['id'], PDO::PARAM_STR);
+            $stmt->execute();
+            $row =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($row as $r)
+            {
+                if($r)
+                {
+                    $r['user'] = array();
+                    $sql = "SELECT id, first_name, last_name FROM users WHERE id=:user_id";
+                    if($stmt = $this->database->prepare($sql))
+                    {
+                        $stmt->bindParam(':user_id', $r['user_id'], PDO::PARAM_STR);
+                        $stmt->execute();
+                        $r['user'] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    }
+
+                    //Get user image
+                    $sql = "SELECT href FROM user_images WHERE user_id=:user_id LIMIT 1";
+                    if($stmt = $this->database->prepare($sql))
+                    {
+                        $stmt->bindParam(':user_id', $r['user']['id'], PDO::PARAM_STR);
+                        $stmt->execute();
+                        $r['user']['image'] = $stmt->fetch(PDO::FETCH_ASSOC);
+                    }
+
+                    array_push($event['comments'] , $r);
+                }
+            }
+        }
+
         //Gets rsvps
         $event['rsvps'] = array();
         foreach($event['dates'] as $date)

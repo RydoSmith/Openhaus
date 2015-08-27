@@ -110,10 +110,37 @@
                             <div class="row">
                                 <?php if(HTMLHelper::IsLoggedIn()): ?>
                                     <div class="input-field col s10">
-                                        <input type="text" name="comment" class="materialize-textarea" placeholder="leave a comment">
+                                        <input type="text" name="comment" class="materialize-textarea" placeholder="leave a comment" id="comment-input">
                                     </div>
                                     <div class="input-field col s2">
-                                        <input type="submit" class="btn teal not-auth-btn" value="comment">
+                                        <input type="button" class="btn teal not-auth-btn" value="comment" id="comment-btn">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s12 m12 l12" id="comments">
+                                            <?php if($model->event['comments']): ?>
+                                                <?php foreach($model->event['comments'] as $comment): ?>
+                                                    <div class="row">
+                                                        <div class="col s1 m1 l1">
+                                                            <img src="<?= $comment['user']['image']['href'] ?>" alt="" class="circle responsive-img" style="width: 100%">
+                                                        </div>
+                                                        <div class="col s11 m11 l11">
+                                                            <h6 class="teal-text" style="font-size: 22px">
+                                                                <?= ucfirst($comment['user']['first_name']) ?> <?= ucfirst($comment['user']['last_name']) ?>
+                                                                <span class="grey-text" style="font-size: 12px; float: right;"><?= HTMLHelper::TimeElapsedString($comment['created']) ?></span>
+                                                            </h6>
+                                                            <p style="margin-bottom: 40px;"><?= $comment['content'] ?></p>
+                                                            <hr>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <div class="row">
+                                                    <div class="col s12 m12 l12">
+                                                        <p>No comments yet, get there first!</p>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 <?php else: ?>
                                     <div class="col s12">
@@ -219,6 +246,41 @@
                 else
                 {
                     Materialize.toast('You already have this event on your watchlist!', 4000);
+                }
+            });
+
+            $('#comment-btn').click(function(){
+                var comment = $('#comment-input').val();
+
+                var data =
+                {
+                    'event_id': "<?= $model->event['id'] ?>",
+                    'user_id': "<?= $model->account->id ?>",
+                    'comment': comment
+                }
+
+                if(comment)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: '/event/comment',
+                        data: data,
+                        dataType: 'json',
+                        success: function(data, message)
+                        {
+                            if(data == "success")
+                            {
+                                Materialize.toast('Comment added!', 4000);
+                                $('#comments').prepend('<div class="row"><div class="col s1 m1 l1"><img src="<?= $model->account->image ?>" alt="" class="circle responsive-img" style="width: 100%"></div><div class="col s11 m11 l11"> <h6 class="teal-text" style="font-size: 22px"><?= ucfirst($model->account->first_name) ?> <?= ucfirst($model->account->last_name) ?><span class="grey-text" style="font-size: 12px; float: right;">now</span> </h6> <p style="margin-bottom: 40px;">' + comment + '</p><hr></div></div>');
+                                $('#comment-input').val('');
+                            }
+                            else
+                            {
+                                Materialize.toast('There was a problem adding your comment', 4000);
+                            }
+                        },
+                        dataType: "JSON"
+                    });
                 }
             });
         <?php else : ?>
