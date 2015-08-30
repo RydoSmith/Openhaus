@@ -467,4 +467,57 @@ class EventModel extends BaseModel
             exit();
         }
     }
+
+    //
+    //WatchList
+    //
+    public function AddToWatchList_POST($event_id)
+    {
+        parent::GetAccountInfo();
+
+        //Check if event is already on watchlist
+        $sql = "SELECT * FROM watchlist WHERE event_id=:event_id AND user_id=:user_id LIMIT 1";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $this->view->account->id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::PARAM_STR);
+            if($row)
+            {
+                echo json_encode("exists");
+                exit();
+            }
+        }
+
+
+
+        //Add to watchlist
+        $sql = "INSERT INTO watchlist (event_id, user_id, created, updated) VALUES (:event_id, :user_id, NOW(), NOW())";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+            $stmt->bindParam(':user_id', $this->view->account->id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $stmt->closeCursor();
+
+            $this->notification = array();
+            //Create notification
+            $notification = array
+            (
+                "user_id" => $this->view->account->id,
+                "type" => NotificationType::AddedToWatchList,
+                "title" => NotificationType::AddedToWatchList,
+                "content" => 'You added an <a href=/event/detail/'.$event_id.'>event</a> to your WatchList'
+            );
+
+            parent::AddNotification($notification);
+
+            echo json_encode("success");
+            exit();
+        }
+    }
+
 }

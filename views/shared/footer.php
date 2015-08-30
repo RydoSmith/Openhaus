@@ -18,7 +18,7 @@
 
 <script>
     var LoggedIn = false;
-    var id = "<?= $model->account->id ?>";
+    var id = "<?php echo $model->account->id ?>";
     if(id)
     {
         LoggedIn = true;
@@ -41,7 +41,7 @@
                     else
                     {
                         $('.notification-count').show();
-                        $('.notification-count').style('display', 'inlineBlock')
+                        $('.notification-count').css('display', 'inlineBlock')
                     }
                 }
             }

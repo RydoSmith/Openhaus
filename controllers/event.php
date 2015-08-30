@@ -138,4 +138,14 @@ class Event extends BaseController
     {
         $model = new EventModel("Comment", true, $_POST);
     }
+
+    //
+    //WatchList
+    //
+    public function AddToWatchList()
+    {
+        $eventId = json_decode(file_get_contents('php://input'), true);
+        $model = new EventModel("AddToWatchList", true, array($eventId));
+    }
+
 }

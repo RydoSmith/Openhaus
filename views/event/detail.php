@@ -235,18 +235,28 @@
                 $('#rsvp-btn').attr('data-event-date-id', eventDateId);
             });
 
-            var isOnWatchlist = false;
-
             $('#watchlist-btn').click(function(){
-                if(!isOnWatchlist)
-                {
-                    Materialize.toast('Event added to watchlist!', 4000);
-                    isOnWatchlist = true;
-                }
-                else
-                {
-                    Materialize.toast('You already have this event on your watchlist!', 4000);
-                }
+
+                var data = "<?= $model->event['id'] ?>";
+
+                $.ajax({
+                    type: "POST",
+                    url: '/event/AddToWatchList',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data, message)
+                    {
+                        if(data == "success")
+                        {
+                            Materialize.toast('Added to WatchList!', 4000);
+                        }
+                        else
+                        {
+                            Materialize.toast('Already on watchlist', 4000);
+                        }
+                    },
+                    dataType: "JSON"
+                });
             });
 
             $('#comment-btn').click(function(){
