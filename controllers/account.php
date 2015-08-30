@@ -69,7 +69,7 @@ class Account extends BaseController
             $_SESSION['Username'] = $_POST['email'];
             $_SESSION['LoggedIn'] = 1;
 
-            $this->Redirect('home');
+            $this->Redirect('user', 'dashboard');
         }
 
     }
@@ -109,7 +109,7 @@ class Account extends BaseController
             else
             {
                 //No return parameter send to default logged in screen
-                $this->Redirect('home');
+                $this->Redirect('user', 'dashboard');
             }
         }
         else
