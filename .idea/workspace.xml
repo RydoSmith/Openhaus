@@ -6,8 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c0a5823f-6f52-4fce-aeb2-45b6813b1090" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/account.php" afterPath="$PROJECT_DIR$/controllers/account.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/conf/config.php" afterPath="$PROJECT_DIR$/conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/event.php" afterPath="$PROJECT_DIR$/controllers/event.php" />
     </list>
     <ignored path="Openhaus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +30,61 @@
     <favorites_list name="Openhaus" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="eventmodel.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/eventmodel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-90.88461" vertical-offset="612" max-vertical-offset="3281">
+              <caret line="355" column="15" selection-start-line="355" selection-start-column="15" selection-end-line="355" selection-end-column="15" />
+              <folding>
+                <element signature="n#Create#0;n#EventModel#0;n#!!top" expanded="false" />
+                <element signature="e#4325#5004#0#PHP" expanded="false" />
+                <element signature="n#Search#0;n#EventModel#0;n#!!top" expanded="false" />
+                <element signature="n#Detail#0;n#EventModel#0;n#!!top" expanded="false" />
+                <element signature="n#RSVP_POST#0;n#EventModel#0;n#!!top" expanded="false" />
+                <element signature="n#Comment_POST#0;n#EventModel#0;n#!!top" expanded="false" />
+                <element signature="n#AddToWatchList_POST#0;n#EventModel#0;n#!!top" expanded="false" />
+                <marker date="1440956433977" expanded="true" signature="2717:3210" placeholder="INSERT INTO ..." />
+                <marker date="1440956433977" expanded="true" signature="4400:4544" placeholder="INSERT INTO ..." />
+                <marker date="1440956433977" expanded="true" signature="5141:5240" placeholder="INSERT INTO ..." />
+                <marker date="1440956433977" expanded="true" signature="5694:5793" placeholder="INSERT INTO ..." />
+                <marker date="1440956433977" expanded="true" signature="6634:6654" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="6738:6783" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="7003:7063" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="7135:7172" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="7424:7469" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="7581:7649" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="7761:7821" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="7893:7976" placeholder="SELECT * FRO..events..." />
+                <marker date="1440956433977" expanded="true" signature="10221:10283" placeholder="SELECT first..users..." />
+                <marker date="1440956433977" expanded="true" signature="10602:10650" placeholder="SELECT * FRO..user_images..." />
+                <marker date="1440956433977" expanded="true" signature="11154:11235" placeholder="SELECT * FRO..event_rsvps..." />
+                <marker date="1440956433977" expanded="true" signature="11784:11837" placeholder="SELECT event..event_dates..." />
+                <marker date="1440956433977" expanded="true" signature="12160:12213" placeholder="SELECT user_..events..." />
+                <marker date="1440956433977" expanded="true" signature="12540:12654" placeholder="INSERT INTO ..." />
+                <marker date="1440956433977" expanded="true" signature="13600:13726" placeholder="INSERT INTO ..." />
+                <marker date="1440956433977" expanded="true" signature="14158:14211" placeholder="SELECT user_..events..." />
+                <marker date="1440956433977" expanded="true" signature="15267:15344" placeholder="SELECT * FRO..watchlist..." />
+                <marker date="1440956433977" expanded="true" signature="15815:15917" placeholder="INSERT INTO ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controllers/event.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.74174756" vertical-offset="791" max-vertical-offset="2244">
+              <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
+              <folding>
+                <element signature="n#Search#0;n#Event#0;n#!!top" expanded="false" />
+                <element signature="n#Detail#0;n#Event#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +138,6 @@
         <option value="$PROJECT_DIR$/common/notificationtype.php" />
         <option value="$PROJECT_DIR$/views/shared/footer.php" />
         <option value="$PROJECT_DIR$/views/event/detail.php" />
-        <option value="$PROJECT_DIR$/controllers/event.php" />
         <option value="$PROJECT_DIR$/models/eventmodel.php" />
         <option value="$PROJECT_DIR$/views/user/watchlist.php" />
         <option value="$PROJECT_DIR$/controllers/user.php" />
@@ -93,6 +145,7 @@
         <option value="$PROJECT_DIR$/models/usermodel.php" />
         <option value="$PROJECT_DIR$/controllers/account.php" />
         <option value="$PROJECT_DIR$/conf/config.php" />
+        <option value="$PROJECT_DIR$/controllers/event.php" />
       </list>
     </option>
   </component>
@@ -418,7 +471,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1965" y="0" width="1811" height="956" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15801887" sideWeight="0.49972144" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -463,7 +516,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="25" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -840,55 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/eventmodel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.862136" vertical-offset="0" max-vertical-offset="2261">
-          <caret line="512" column="78" selection-start-line="512" selection-start-column="78" selection-end-line="512" selection-end-column="78" />
-          <folding>
-            <element signature="n#Create#0;n#EventModel#0;n#!!top" expanded="false" />
-            <element signature="n#Create_POST#0;n#EventModel#0;n#!!top" expanded="false" />
-            <element signature="e#4325#5004#0#PHP" expanded="false" />
-            <element signature="n#Search#0;n#EventModel#0;n#!!top" expanded="false" />
-            <element signature="n#Detail#0;n#EventModel#0;n#!!top" expanded="false" />
-            <element signature="n#RSVP_POST#0;n#EventModel#0;n#!!top" expanded="false" />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT first..users..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..user_images..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..event_rsvps..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT event..event_dates..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT user_..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT user_..events..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..watchlist..." />
-            <marker date="1440956433977" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/event.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59417474" vertical-offset="51" max-vertical-offset="1360">
-          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="32" selection-end-column="73" />
-          <folding>
-            <element signature="n#Search#0;n#Event#0;n#!!top" expanded="false" />
-            <element signature="n#ImageUpload#0;n#Event#0;n#!!top" expanded="false" />
-            <element signature="n#Detail#0;n#Event#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/accountmodel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.3708737" vertical-offset="3641" max-vertical-offset="9418">
@@ -981,6 +985,55 @@
         <state vertical-scroll-proportion="0.32427186" vertical-offset="139" max-vertical-offset="680">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/eventmodel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-90.88461" vertical-offset="612" max-vertical-offset="3281">
+          <caret line="355" column="15" selection-start-line="355" selection-start-column="15" selection-end-line="355" selection-end-column="15" />
+          <folding>
+            <element signature="n#Create#0;n#EventModel#0;n#!!top" expanded="false" />
+            <element signature="e#4325#5004#0#PHP" expanded="false" />
+            <element signature="n#Search#0;n#EventModel#0;n#!!top" expanded="false" />
+            <element signature="n#Detail#0;n#EventModel#0;n#!!top" expanded="false" />
+            <element signature="n#RSVP_POST#0;n#EventModel#0;n#!!top" expanded="false" />
+            <element signature="n#Comment_POST#0;n#EventModel#0;n#!!top" expanded="false" />
+            <element signature="n#AddToWatchList_POST#0;n#EventModel#0;n#!!top" expanded="false" />
+            <marker date="1440956433977" expanded="true" signature="2717:3210" placeholder="INSERT INTO ..." />
+            <marker date="1440956433977" expanded="true" signature="4400:4544" placeholder="INSERT INTO ..." />
+            <marker date="1440956433977" expanded="true" signature="5141:5240" placeholder="INSERT INTO ..." />
+            <marker date="1440956433977" expanded="true" signature="5694:5793" placeholder="INSERT INTO ..." />
+            <marker date="1440956433977" expanded="true" signature="6634:6654" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="6738:6783" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="7003:7063" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="7135:7172" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="7424:7469" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="7581:7649" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="7761:7821" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="7893:7976" placeholder="SELECT * FRO..events..." />
+            <marker date="1440956433977" expanded="true" signature="10221:10283" placeholder="SELECT first..users..." />
+            <marker date="1440956433977" expanded="true" signature="10602:10650" placeholder="SELECT * FRO..user_images..." />
+            <marker date="1440956433977" expanded="true" signature="11154:11235" placeholder="SELECT * FRO..event_rsvps..." />
+            <marker date="1440956433977" expanded="true" signature="11784:11837" placeholder="SELECT event..event_dates..." />
+            <marker date="1440956433977" expanded="true" signature="12160:12213" placeholder="SELECT user_..events..." />
+            <marker date="1440956433977" expanded="true" signature="12540:12654" placeholder="INSERT INTO ..." />
+            <marker date="1440956433977" expanded="true" signature="13600:13726" placeholder="INSERT INTO ..." />
+            <marker date="1440956433977" expanded="true" signature="14158:14211" placeholder="SELECT user_..events..." />
+            <marker date="1440956433977" expanded="true" signature="15267:15344" placeholder="SELECT * FRO..watchlist..." />
+            <marker date="1440956433977" expanded="true" signature="15815:15917" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74174756" vertical-offset="791" max-vertical-offset="2244">
+          <caret line="84" column="46" selection-start-line="84" selection-start-column="46" selection-end-line="84" selection-end-column="46" />
+          <folding>
+            <element signature="n#Search#0;n#Event#0;n#!!top" expanded="false" />
+            <element signature="n#Detail#0;n#Event#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

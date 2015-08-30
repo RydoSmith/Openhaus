@@ -82,7 +82,7 @@ class Event extends BaseController
                 exit();
             }
 
-            if($_FILES['file']['size'] > 400000)
+            if($_FILES['file']['size'] > 4000000)
             {
                 header('Content-Type: application/json');
                 http_response_code(400);
