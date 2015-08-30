@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col s5 m5 l5">
                             <div style="width: 150px; padding: 10px; margin-left: 40px;">
-                                <img src="<?= $model->account->image ?>" alt="" class="circle responsive-img" style="width: 100%">
+                                <img src="<?= $model->event['user']['image']['href'] ?>" alt="" class="circle responsive-img" style="width: 100%">
                                 <p style="text-align:center; margin: 0; color: #696969; font-size: 22px;"><?= ucfirst($model->event['user']['first_name']); ?> <?= ucfirst($model->event['user']['last_name']); ?></p>
                                 <p style="text-align:center; margin: 0; color: #696969; font-size: 16px;"><?= ucfirst($model->event['user']['bio']); ?>Bio will go here, interface is coming!</p>
                             </div>

@@ -203,7 +203,7 @@ class AccountModel extends BaseModel
                 $this->addModelError('image', new ModelError('Image must be a valid format, either .jpg or .png'));
             }
 
-            if($_FILES['file']['size'] > 10000)
+            if($_FILES['file']['size'] > 1048576)
             {
                 $this->addModelError('image', new ModelError('File too large, must be smaller than 1mb'));
             }

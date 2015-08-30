@@ -22,21 +22,25 @@
                     <h6 class="white-text" style="width: 100%">Notifications <span class="new badge pink notification-count" style="position: relative; padding: 2px; margin-left: 20px;"><?=$model->account->unread_notifications_count?></span></h6>
                 </div>
                 <div class="dashboard-panel-body">
-                    <?php foreach($model->account->notifications as $notification): ?>
-                        <p>
-                            <strong class="teal-text"><?=$notification['title']?></strong>
-                            <?php if($notification['has_seen'] == 0): ?>
-                                <span class="new badge pink new-badge" style="position: relative; padding: 2px; margin-left: 20px;"></span>
-                            <?php endif; ?>
-                            <span class="blue-grey-text" style="margin-left: 40px"><?=$notification['content']?></span>
+                    <?php if($model->account->notifications): ?>
+                        <?php foreach($model->account->notifications as $notification): ?>
+                            <p>
+                                <strong class="teal-text"><?=$notification['title']?></strong>
+                                <?php if($notification['has_seen'] == 0): ?>
+                                    <span class="new badge pink new-badge" style="position: relative; padding: 2px; margin-left: 20px;"></span>
+                                <?php endif; ?>
+                                <span class="blue-grey-text" style="margin-left: 40px"><?=$notification['content']?></span>
 
-                            <?php if($notification['has_seen'] == 0): ?>
-                                <span style="float: right; margin-left: 30px"><a href="#!" class="large material-icons text-deal dismiss-notification" data-notification-id="<?=$notification['id']?>">done</a></span>
-                            <?php endif; ?>
+                                <?php if($notification['has_seen'] == 0): ?>
+                                    <span style="float: right; margin-left: 30px"><a href="#!" class="large material-icons text-deal dismiss-notification" data-notification-id="<?=$notification['id']?>">done</a></span>
+                                <?php endif; ?>
 
-                            <span class="blue-grey-text" style="float: right;"><?=date('D, jS M : ga', strtotime($notification['created'])) ?></span>
-                        </p>
-                    <?php endforeach; ?>
+                                <span class="blue-grey-text" style="float: right;"><?=date('D, jS M : ga', strtotime($notification['created'])) ?></span>
+                            </p>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No new notifications!</p>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="dashboard-panel">

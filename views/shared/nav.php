@@ -9,7 +9,10 @@
                     <br>
                         <a href="/account/logout" style="display: inline-block; padding: 0; font-size: 12px">LOGOUT</a>
                     </span>
-                    <img src="<?= $model->account->image ?>" alt="" class="circle responsive-img" style="width: 38px;">
+                    <a href="/user/dashboard" style="float: right;">
+                        <img src="<?= $model->account->image ?>" alt="" class="circle responsive-img" style="width: 38px;">
+                    </a>
+
                 </div>
 
             <?php else: ?>

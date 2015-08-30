@@ -337,6 +337,17 @@ class EventModel extends BaseModel
             $stmt->closeCursor();
 
         }
+
+        $sql = "SELECT * FROM user_images WHERE user_id=:user_id";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':user_id', $this->view->event['user_id'], PDO::PARAM_STR);
+            $stmt->execute();
+            $this->view->event['user']['image'] = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $stmt->closeCursor();
+
+        }
     }
 
     //
@@ -447,7 +458,7 @@ class EventModel extends BaseModel
                 "user_id" => $this->notification['user_id'],
                 "type" => NotificationType::CreatedComment,
                 "title" => NotificationType::CreatedComment,
-                "content" => 'You have a new <a href=/event/detail/'.$event_id.'>comment</a> from '.$this->view->account->full_name
+                "content" => 'You have a new <a href=/event/detail/'.$event_id.'#comments>comment</a> from '.$this->view->account->full_name
             );
 
             parent::AddNotification($notification);
