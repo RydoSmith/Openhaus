@@ -142,6 +142,30 @@ abstract class BaseModel
             $stmt->execute();
             $this->view->account->image = $stmt->fetch(PDO::FETCH_ASSOC)['href'];
         }
+
+        //Get notifications
+        $sql = "SELECT * FROM notifications WHERE user_id=:id ORDER BY has_seen, created DESC";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':id', $this->view->account->id, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $this->view->account->notifications = $row;
+            $this->view->account->notifications_count = count($row);
+        }
+
+        //Get unread notifications count
+        $sql = "SELECT * FROM notifications WHERE user_id=:id AND has_seen=0 ORDER BY created DESC";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':id', $this->view->account->id, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $this->view->account->unread_notifications = $row;
+            $this->view->account->unread_notifications_count = count($row);
+        }
     }
 
     //Is User Logged In
@@ -170,6 +194,33 @@ abstract class BaseModel
         }
     }
 
+    //
+    //Notifications
+    //
+    public function AddNotification($params) //takes assoc array with 'user_id, type, title, content'
+    {
+        //Create notification object
+        $notification = array
+        (
+            'user_id' => $params['user_id'],
+            'type'=>$params['type'],
+            'title'=>$params['title'],
+            'content'=>$params['content']
+        );
+
+        //Create messages based on type
+
+        $sql = "INSERT INTO notifications (user_id, type, title, content, created, updated) VALUES (:user_id, :type, :title, :content, NOW(), NOW())";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':user_id', $notification['user_id'], PDO::PARAM_STR);
+            $stmt->bindParam(':type', $notification['type'], PDO::PARAM_STR);
+            $stmt->bindParam(':title', $notification['title'], PDO::PARAM_STR);
+            $stmt->bindParam(':content', $notification['content'], PDO::PARAM_STR);
+
+            $stmt->execute();
+        }
+    }
 
     //
     //EVENT HELPERS

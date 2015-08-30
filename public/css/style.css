@@ -285,3 +285,34 @@ ul.user-nav li a.selected
 }
 
 
+.dashboard-panel
+{
+
+}
+
+.dashboard-panel-heading
+{
+    padding: 10px 15px;
+}
+
+.dashboard-panel-body
+{
+    border-left: 1px solid #006064;
+    border-right: 1px solid #006064;
+    border-bottom: 1px solid #006064;
+    padding: 20px 15px;
+    height: 400px;
+    margin-bottom: 20px;
+    display: block;
+    overflow-y: scroll;
+}
+
+.dashboard-panel-body p
+{
+    margin: 0;
+    padding: 20px 15px;
+    background: #efefef;
+    margin-bottom: 20px;
+}
+
+

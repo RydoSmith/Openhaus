@@ -9,6 +9,7 @@
     require_once 'common/basecontroller.php';
     require_once 'common/basemodel.php';
     require_once 'common/messagetype.php';
+    require_once 'common/notificationtype.php';
     require_once 'common/email.php';
     require_once 'common/modelerror.php';
 

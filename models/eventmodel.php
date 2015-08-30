@@ -364,6 +364,28 @@ class EventModel extends BaseModel
             }
         }
 
+        $this->notification = array();
+
+        //Get event id
+        $sql = "SELECT event_id FROM event_dates WHERE id=:id LIMIT 1";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->notification['event_id'] = $row['event_id'];
+        }
+
+        //Get event users id
+        $sql = "SELECT user_id FROM events WHERE id=:event_id LIMIT 1";
+        if($stmt = $this->database->prepare($sql))
+        {
+            $stmt->bindParam(':event_id', $this->notification['event_id'], PDO::PARAM_STR);
+            $stmt->execute();
+            $row =  $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->notification['user_id'] = $row['user_id'];
+        }
+
         $sql = "INSERT INTO event_rsvps (event_date_id, user_id, created, updated) VALUES (:event_date_id, :user_id, NOW(), NOW())";
         if($stmt = $this->database->prepare($sql))
         {
@@ -372,10 +394,23 @@ class EventModel extends BaseModel
             $stmt->execute();
             $stmt->closeCursor();
 
+            //Create notification
+            $notification = array
+            (
+                "user_id"=>$this->notification['user_id'],
+                "type"=>NotificationType::RSVP,
+                "title"=>NotificationType::RSVP,
+                "content"=>" You have a new rsvp from ".$this->view->account->full_name
+            );
+
+            parent::AddNotification($notification);
+
             $return["json"] = "success";
             echo json_encode($return);
             exit();
         }
+
+
     }
 
     //
@@ -392,6 +427,30 @@ class EventModel extends BaseModel
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
             $stmt->bindParam(':content', $comment, PDO::PARAM_STR);
             $stmt->execute();
+
+            $stmt->closeCursor();
+
+            $this->notification = array();
+            //Get event users id
+            $sql = "SELECT user_id FROM events WHERE id=:event_id LIMIT 1";
+            if($stmt = $this->database->prepare($sql))
+            {
+                $stmt->bindParam(':event_id', $event_id, PDO::PARAM_STR);
+                $stmt->execute();
+                $row =  $stmt->fetch(PDO::FETCH_ASSOC);
+                $this->notification['user_id'] = $row['user_id'];
+            }
+
+            //Create notification
+            $notification = array
+            (
+                "user_id" => $this->notification['user_id'],
+                "type" => NotificationType::CreatedComment,
+                "title" => NotificationType::CreatedComment,
+                "content" => 'You have a new <a href=/event/detail/'.$event_id.'>comment</a> from '.$this->view->account->full_name
+            );
+
+            parent::AddNotification($notification);
 
             echo json_encode("success");
             exit();
